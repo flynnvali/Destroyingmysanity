@@ -57,8 +57,6 @@ public class SwissArmyKnifeItem extends DiggerItem {
 
     @OnlyIn(Dist.CLIENT)
     public static class ClientState {
-        private static Map<LivingEntity, ClientState> states = new WeakHashMap<>();
-
         @Nullable
         public Tool selectedTool = null;
         public Tool lastSelectedTool = null;
@@ -88,6 +86,8 @@ public class SwissArmyKnifeItem extends DiggerItem {
     };
 
     @OnlyIn(Dist.CLIENT)
+    private static Map<LivingEntity, ClientState> clientStates = new WeakHashMap<>();
+
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
         if (level.isClientSide() && entity == Minecraft.getInstance().player) {
@@ -162,8 +162,8 @@ public class SwissArmyKnifeItem extends DiggerItem {
     public static void clientPlayerTick() {
         Minecraft minecraft = Minecraft.getInstance();
 
-        ClientState.states.keySet().removeIf(entity -> !(entity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SwissArmyKnifeItem || entity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof SwissArmyKnifeItem));
-        ClientState.states.forEach((entity, state) -> state.tick());
+        clientStates.keySet().removeIf(entity -> !(entity.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SwissArmyKnifeItem || entity.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof SwissArmyKnifeItem));
+        clientStates.forEach((entity, state) -> state.tick());
 
         LocalPlayer player = minecraft.player;
         if (player == null) return;
@@ -233,9 +233,8 @@ public class SwissArmyKnifeItem extends DiggerItem {
         if (tool != null) stack.getOrCreateTag().putInt("ActiveTool", tool.ordinal());
     };
 
-    @OnlyIn(Dist.CLIENT)
     public static ClientState getClientState(LivingEntity entity) {
-        return ClientState.states.computeIfAbsent(entity, e -> new ClientState());
+        return clientStates.computeIfAbsent(entity, e -> new ClientState());
     };
 
     public static enum Tool {
