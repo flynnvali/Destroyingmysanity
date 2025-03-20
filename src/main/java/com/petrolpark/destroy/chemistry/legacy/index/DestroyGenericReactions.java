@@ -42,6 +42,7 @@ public class DestroyGenericReactions {
     public static final CarboxylicAcidEsterification CARBOXYLIC_ACID_ESTERIFICATION = new CarboxylicAcidEsterification();
     public static final CyanideNucleophilicAddition CYANIDE_NUCLEOPHILIC_ADDITION = new CyanideNucleophilicAddition();
     public static final HalideAmineSubstitution HALIDE_AMINE_SUBSTITUION = new HalideAmineSubstitution();
+    public static final HalideAcetylideSubstitution HALIDE_ACETYLIDE_SUBSTITUTION = new HalideAcetylideSubstitution();
     public static final HalideAmmoniaSubstitution HALIDE_AMMONIA_SUBSTITUTION = new HalideAmmoniaSubstitution();
     public static final HalideCyanideSubstitution HALIDE_CYANIDE_SUBSTITUTION = new HalideCyanideSubstitution();
     public static final HalideHydroxideSubstitution HALIDE_HYDROXIDE_SUBSTITUTION = new HalideHydroxideSubstitution();

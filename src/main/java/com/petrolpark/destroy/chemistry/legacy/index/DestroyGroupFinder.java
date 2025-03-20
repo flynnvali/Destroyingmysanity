@@ -10,26 +10,7 @@ import com.petrolpark.destroy.chemistry.legacy.LegacyBond;
 import com.petrolpark.destroy.chemistry.legacy.LegacyBond.BondType;
 import com.petrolpark.destroy.chemistry.legacy.LegacyElement;
 import com.petrolpark.destroy.chemistry.legacy.LegacyFunctionalGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AcidAnhydrideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AcylChlorideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AlcoholGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AlkeneGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AlkoxideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AlkyneGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.BoraneGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.BorateEsterGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.BoricAcidGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.CarbonylGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.CarboxylicAcidGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.EsterGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.HalideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.IsocyanateGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NitrileGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NitroGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NonTertiaryAmineGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NonTertiaryBoraneGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.PrimaryAmineGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.UnsubstitutedAmideGroup;
+import com.petrolpark.destroy.chemistry.legacy.index.group.*;
 
 public class DestroyGroupFinder extends GroupFinder {
 
@@ -101,7 +82,7 @@ public class DestroyGroupFinder extends GroupFinder {
                             };
                             }
                     };
-                } else { // Alcohols, halides, nitriles, amines, isocyanates, nitros, boranes, borate esters
+                } else { // Alcohols, alkoxides, halides, nitriles, amines, isocyanates, nitros, boranes, borate esters
                     for (LegacyAtom halogen : halogens) {
                         if (chlorines.size() < 3 && fluorines.size() == 0) { // Targeting the chlorines on Carbon Tetrachloride, Chloroform and the various CFCs to make them nonreactive
                             groups.add(new HalideGroup(carbon, halogen, carbons.size()));
@@ -110,7 +91,7 @@ public class DestroyGroupFinder extends GroupFinder {
                     for (LegacyAtom oxygen : singleBondOxygens) { // Alcohols
                         if (bondedAtomsOfElementTo(structure, oxygen, LegacyElement.HYDROGEN).size() == 1) {
                             groups.add(new AlcoholGroup(carbon, oxygen, bondedAtomsOfElementTo(structure, oxygen, LegacyElement.HYDROGEN).get(0), carbons.size()));
-                        } else if (oxygen.formalCharge == -1d) {
+                        } else if (oxygen.formalCharge == -1d) { // Alkoxides
                             groups.add(new AlkoxideGroup(carbon, oxygen));
                         };
                         List<LegacyAtom> borateBorons = bondedAtomsOfElementTo(structure, oxygen, LegacyElement.BORON);
@@ -175,19 +156,27 @@ public class DestroyGroupFinder extends GroupFinder {
 
                 if (alkyneCarbons.size() == 1) { // There can only ever be 1 triple bond on a carbon - check if there is one
                     LegacyAtom alkyneCarbon = alkyneCarbons.get(0);
+
                     if (!carbonsToIgnoreForAlkynes.contains(alkyneCarbon)) {
                         int firstCarbonDegree = bondedAtomsOfElementTo(structure, carbon, LegacyElement.CARBON).size() - 1;
                         int secondCarbonDegree = bondedAtomsOfElementTo(structure, alkyneCarbon, LegacyElement.CARBON).size() - 1;
                         // If the two Carbons have the same degree, then there are two alkyne Groups
-                        if (firstCarbonDegree >= secondCarbonDegree) {
-                            groups.add(new AlkyneGroup(carbon, alkyneCarbon));
-                        };
-                        if (secondCarbonDegree >= firstCarbonDegree) {
-                            groups.add(new AlkyneGroup(alkyneCarbon, carbon));
-                        };
-                        carbonsToIgnoreForAlkynes.add(carbon);
-                        carbonsToIgnoreForAlkynes.add(alkyneCarbon); // This will only ever be in one alkyne group so we can ignore it the second time
-                    };
+
+                        if (carbon.formalCharge == 0d && alkyneCarbon.formalCharge == 0d) { // to make sure there is no charge present on any of the carbons, to prevent acetylene from deprotonating twice
+                            if (firstCarbonDegree >= secondCarbonDegree) {
+                                groups.add(new AlkyneGroup(carbon, alkyneCarbon));
+                            };
+                            if (secondCarbonDegree >= firstCarbonDegree) {
+                                groups.add(new AlkyneGroup(alkyneCarbon, carbon));
+                            };
+                            carbonsToIgnoreForAlkynes.add(carbon);
+                            carbonsToIgnoreForAlkynes.add(alkyneCarbon); // This will only ever be in one alkyne group so we can ignore it the second time
+                        } else if (alkyneCarbon.formalCharge == -1d) { // Acetylides
+                            groups.add(new AcetylideGroup(alkyneCarbon, carbon));
+                        } else if (carbon.formalCharge == -1d) {
+                            groups.add(new AcetylideGroup(alkyneCarbon, carbon));
+                        }
+                    }
                 };
 
             } else if (atom.getElement() == LegacyElement.BORON) {

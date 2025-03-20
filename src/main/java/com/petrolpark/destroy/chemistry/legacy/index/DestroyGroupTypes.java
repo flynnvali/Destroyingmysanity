@@ -1,28 +1,11 @@
 package com.petrolpark.destroy.chemistry.legacy.index;
 
 import com.petrolpark.destroy.chemistry.legacy.LegacyFunctionalGroupType;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AcidAnhydrideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AcylChlorideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AlcoholGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AlkoxideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.BoraneGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.BorateEsterGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.BoricAcidGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.CarbonylGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.CarboxylicAcidGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.EsterGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.HalideGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.IsocyanateGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NitrileGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NitroGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NonTertiaryAmineGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.NonTertiaryBoraneGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.PrimaryAmineGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.SaturatedCarbonGroup;
-import com.petrolpark.destroy.chemistry.legacy.index.group.UnsubstitutedAmideGroup;
+import com.petrolpark.destroy.chemistry.legacy.index.group.*;
 
 public class DestroyGroupTypes {
     
+    public static final LegacyFunctionalGroupType<AcetylideGroup> ACETYLIDE = new LegacyFunctionalGroupType<>(() -> DestroyMolecules.GENERIC_ACETYLIDE);
     public static final LegacyFunctionalGroupType<AcidAnhydrideGroup> ACID_ANHYDRIDE = new LegacyFunctionalGroupType<>(() -> DestroyMolecules.GENERIC_ACID_ANHYDRIDE);
     public static final LegacyFunctionalGroupType<AcylChlorideGroup> ACYL_CHLORIDE = new LegacyFunctionalGroupType<>(() -> DestroyMolecules.GENERIC_ACYL_CHLORIDE);
     public static final LegacyFunctionalGroupType<AlcoholGroup> ALCOHOL = new LegacyFunctionalGroupType<>(() -> DestroyMolecules.GENERIC_ALCOHOL);
