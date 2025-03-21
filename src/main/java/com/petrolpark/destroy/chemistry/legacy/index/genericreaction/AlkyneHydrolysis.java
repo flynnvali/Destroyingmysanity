@@ -7,7 +7,6 @@ import com.petrolpark.destroy.chemistry.legacy.genericreaction.GenericReactant;
 import com.petrolpark.destroy.chemistry.legacy.index.DestroyMolecules;
 import com.petrolpark.destroy.chemistry.legacy.genericreaction.SingleGroupGenericReaction;
 import com.petrolpark.destroy.chemistry.legacy.index.DestroyGroupTypes;
-import com.petrolpark.destroy.chemistry.legacy.index.group.AlkyneGroup;
 import com.petrolpark.destroy.chemistry.legacy.index.group.SaturatedCarbonGroup;
 
 public class AlkyneHydrolysis extends SingleGroupGenericReaction<SaturatedCarbonGroup> {
