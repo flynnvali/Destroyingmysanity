@@ -973,6 +973,8 @@
     "destroy.ponder.vat.uv.text_3": "As the level of \uED08 Ozone Depletion increases, more UV power reaches the Vat in this way.",
     "destroy.ponder.vat.uv.text_4": "More UV power is supplied by Blacklights placed directly adjacent to transparent sides of the Vat.",
 
+    "destroy.generic_reaction.acetylide_hydration": "[destroy:acetylide] Hydration",
+    "destroy.generic_reaction.acetylide_hydration.description": "The {hydrolysis, destroy:hydrolysis} of an [destroy:acetylide] and {deprotonation, destroy:deprotonation} of [destroy:water] to form an [destroy:alkyne] and a [destroy:hydroxide]",
     "destroy.generic_reaction.acyl_chloride_esterification": "[destroy:acyl_chloride] Esterification",
     "destroy.generic_reaction.acyl_chloride_esterification.description": "The joining of an [destroy:acyl_chloride] and an [destroy:alcohol] to make an [destroy:ester].",
     "destroy.generic_reaction.acyl_chloride_formation": "[destroy:acyl_chloride] Formation",

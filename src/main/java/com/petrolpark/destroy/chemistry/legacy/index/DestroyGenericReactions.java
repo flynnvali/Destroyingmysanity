@@ -6,6 +6,7 @@ import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.*;
 
 public class DestroyGenericReactions {
 
+    public static final AcetylideHydrolysis ACETYLIDE_HYDRATION = new AcetylideHydrolysis();
     public static final AcylChlorideEsterification ACYL_CHLORIDE_ESTERIFICATION = new AcylChlorideEsterification();
     public static final AcylChlorideFormation ACYL_CHLORIDE_FORMATION = new AcylChlorideFormation();
     public static final AcylChlorideHydrolysis ACYL_CHLORIDE_HYDROLYSIS = new AcylChlorideHydrolysis();
