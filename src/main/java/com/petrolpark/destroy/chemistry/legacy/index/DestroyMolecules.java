@@ -164,6 +164,12 @@ public final class DestroyMolecules {
         .tag(Tags.SMOG)
         .build(),
 
+    AZANIDE = builder()
+            .id("azanide")
+            .structure(LegacyMolecularStructure.atom(LegacyElement.NITROGEN, -1).addAtom(LegacyElement.HYDROGEN).addAtom(LegacyElement.HYDROGEN))
+            .tag(Tags.ACUTELY_TOXIC)
+            .build(),
+
     BENZENE = builder()
         .id("benzene")
         .structure(LegacyMolecularStructure.deserialize("destroy:benzene:,,,,"))
@@ -542,6 +548,11 @@ public final class DestroyMolecules {
         .tag(Tags.SMOG)
         .build(),
 
+    ETHYNIDE = builder()
+        .id("ethynide")
+        .structure(LegacyMolecularStructure.deserialize("destroy:linear:C#C^-1"))
+        .build(),
+
     ETHOXIDE = builder()
         .id("ethoxide")
         .structure(LegacyMolecularStructure.deserialize("destroy:linear:CCO^-1"))
@@ -567,6 +578,13 @@ public final class DestroyMolecules {
     FLUORIDE = builder()
         .id("fluoride")
         .structure(LegacyMolecularStructure.atom(LegacyElement.FLUORINE, -1))
+        .build(),
+
+    GENERIC_ACETYLIDE = builder()
+        .id("generic_acetylide")
+        .structure(LegacyMolecularStructure.deserialize("destroy:linear:RC#C^-1"))
+        .hypothetical()
+        .translationKey("acetylide")
         .build(),
 
     GENERIC_ACID_ANHYDRIDE = builder()
@@ -603,6 +621,7 @@ public final class DestroyMolecules {
         .hypothetical()
         .translationKey("alkoxide")
         .build(),
+
 
     GENERIC_ALKYNE = builder()
         .id("generic_alkyne")
