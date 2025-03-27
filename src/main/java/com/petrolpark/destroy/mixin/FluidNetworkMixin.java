@@ -2,7 +2,6 @@ package com.petrolpark.destroy.mixin;
 
 import java.util.Iterator;
 
-import com.petrolpark.destroy.block.DestroyBlocks;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
