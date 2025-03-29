@@ -21,7 +21,7 @@ public class DoubleElimination extends SingleGroupGenericReaction<HalideGroup> {
 
     @Override
     public boolean isPossibleIn(ReadOnlyMixture mixture) {
-        return mixture.getConcentrationOf(DestroyMolecules.AZANIDE) > 0f;
+        return mixture.getConcentrationOf(DestroyMolecules.WATER) > 0f; // if you've decided to uncomment this reaction, this should use Azanide instead of water. The water is just here so the thing builds.
     };
 
     @Override
@@ -66,7 +66,7 @@ public class DoubleElimination extends SingleGroupGenericReaction<HalideGroup> {
 
         builder
             .addReactant(reactant.getMolecule(), products)
-            .addReactant(DestroyMolecules.AZANIDE, products * 2)
+            .addReactant(DestroyMolecules.WATER, products * 2)
             .addProduct(getIon(halide.halogen))
             .addProduct(DestroyMolecules.AMMONIA, products * 2);
 

@@ -1,6 +1,7 @@
 package com.petrolpark.destroy.chemistry.legacy.index.genericreaction;
 
 import com.petrolpark.destroy.Destroy;
+import com.petrolpark.destroy.DestroyItems;
 import com.petrolpark.destroy.chemistry.legacy.LegacyBond.BondType;
 import com.petrolpark.destroy.chemistry.legacy.*;
 import com.petrolpark.destroy.chemistry.legacy.genericreaction.GenericReactant;
@@ -12,7 +13,7 @@ import com.petrolpark.destroy.chemistry.legacy.index.group.SaturatedCarbonGroup;
 public class AlkynePartialHydrogenation extends SingleGroupGenericReaction<SaturatedCarbonGroup> {
 
     public AlkynePartialHydrogenation() {
-        super(Destroy.asResource( "alkyne_dissolving_metal_reduction"),
+        super(Destroy.asResource( "alkyne_poisoned_hydrogenation"),
                 DestroyGroupTypes.ALKYNE);
     };
 
@@ -37,11 +38,9 @@ public class AlkynePartialHydrogenation extends SingleGroupGenericReaction<Satur
 
         return reactionBuilder()
                 .addReactant(reactant.getMolecule(), 1)
-                .addReactant(DestroyMolecules.SODIUM_METAL, 2)
-                .addReactant(DestroyMolecules.AMMONIA, 2) // irl this uses liquid ammonia, couldn't figure out how to implement that
+                .addReactant(DestroyMolecules.HYDROGEN, 1)
+                .addSimpleItemCatalyst(DestroyItems.NICKEL_BORIDE::get, 1f)
                 .addProduct(product, 1)
-                .addProduct(DestroyMolecules.AZANIDE, 2)
-                .addProduct(DestroyMolecules.SODIUM_ION, 2)
                 .build();
     };
 

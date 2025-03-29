@@ -11,11 +11,10 @@ public class DestroyGenericReactions {
     public static final AcylChlorideEsterification ACYL_CHLORIDE_ESTERIFICATION = new AcylChlorideEsterification();
     public static final AcylChlorideFormation ACYL_CHLORIDE_FORMATION = new AcylChlorideFormation();
     public static final AcylChlorideHydrolysis ACYL_CHLORIDE_HYDROLYSIS = new AcylChlorideHydrolysis();
-    // public static final DoubleElimination DOUBLE_ELIMINATION = new DoubleElimination(); // this sits here as a monument to my hubris. turns out, its absolutely horrible for performance in combination with my acetylide additions and also made a bit redundant by those said changes as well! do not uncomment this unless the api is ***much*** more stable than it is as of 3/22/25. otherwise bear my hubris
+    //public static final DoubleElimination DOUBLE_ELIMINATION = new DoubleElimination(); // this sits here as a monument to my hubris. turns out, its absolutely horrible for performance in combination with my acetylide additions and also made a bit redundant by those said changes as well! do not uncomment this unless the api is ***much*** more stable than it is as of 3/22/25. otherwise bear my hubris
     public static final AlcoholDehydration ALCOHOL_DEHYDRATION = new AlcoholDehydration();
     public static final AlcoholOxidation ALCOHOL_OXIDATION = new AlcoholOxidation();
     public static final AldehydeOxidation ALDEHYDE_OXIDATION = new AldehydeOxidation();
-    public static final AlkyneDeprotonation ALKYNE_DEPROTONATION = new AlkyneDeprotonation();
     public static final HydrideAlkyneDeprotonation HYDRIDE_ALKYNE_DEPROTONATION = new HydrideAlkyneDeprotonation();
     public static final AlkyneHydrolysis ALKYNE_HYDROLYSIS = new AlkyneHydrolysis();
     public static final AlkynePartialHydrogenation ALKYNE_DISSOLVING_METAL_REDUCTION = new AlkynePartialHydrogenation();

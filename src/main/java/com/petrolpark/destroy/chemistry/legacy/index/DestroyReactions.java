@@ -61,12 +61,12 @@ public class DestroyReactions {
         .withResult(0f, DestroyAdvancementTrigger.AIBN::asReactionResult)
         .build(),
 
-    AMMONIUM_DEPROTONATION = builder()
-        .id("ammonium_deprotonation")
-        .addReactant(DestroyMolecules.AMMONIUM)
-        .addReactant(DestroyMolecules.AZANIDE)
-        .addProduct(DestroyMolecules.AMMONIA, 2)
-        .build(),
+    //AMMONIUM_DEPROTONATION = builder()
+        //.id("ammonium_deprotonation")
+        //.addReactant(DestroyMolecules.AMMONIUM)
+        //.addReactant(DestroyMolecules.AZANIDE)
+        //.addProduct(DestroyMolecules.AMMONIA, 2)
+        //.build(),
 
     ANDRUSSOW_PROCESS = builder()
         .id("andrussow_process")
@@ -98,13 +98,13 @@ public class DestroyReactions {
         .addProduct(DestroyMolecules.ETHYLANTHRAHYDROQUINONE)
         .build(),
 
-    AZANIDE_HYDROLYIS = builder()
-        .id("azanide_hydration")
-        .addReactant(DestroyMolecules.AZANIDE)
-        .addReactant(DestroyMolecules.WATER)
-        .addProduct(DestroyMolecules.AMMONIA)
-        .addProduct(DestroyMolecules.HYDROXIDE)
-        .build(),
+    //AZANIDE_HYDROLYIS = builder()
+        //.id("azanide_hydration")
+        //.addReactant(DestroyMolecules.AZANIDE)
+        //.addReactant(DestroyMolecules.WATER)
+        //.addProduct(DestroyMolecules.AMMONIA)
+        //.addProduct(DestroyMolecules.HYDROXIDE)
+        //.build(),
 
     BABY_BLUE_PRECIPITATION = builder()
         .id("baby_blue_precipitation")
@@ -752,6 +752,16 @@ public class DestroyReactions {
         .addReactant(DestroyMolecules.NITRATE, 2, 0)
         .addReactant(DestroyMolecules.HYDRAZINE, 3)
         .withResult(3f, PrecipitateReactionResult.of(DestroyItems.NICKEL_HYDRAZINE_NITRATE::asStack)) //TODO figure out actual molar ratios
+        .build(),
+
+    NICKEL_BORIDE_SYNTHESIS = builder()
+        .id("nickel_boride_synthesis")
+        .addReactant(DestroyMolecules.NICKEL_ION, 4)
+        .addReactant(DestroyMolecules.BOROHYDRIDE, 8)
+        .addReactant(DestroyMolecules.WATER, 18)
+        .addProduct(DestroyMolecules.HYDROGEN, 25 )
+        .addProduct(DestroyMolecules.BORIC_ACID, 6)
+        .withResult(2f, PrecipitateReactionResult.of(DestroyItems.NICKEL_BORIDE::asStack))
         .build(),
 
     NICKEL_DISSOLUTION = builder() //TODO replace with redox

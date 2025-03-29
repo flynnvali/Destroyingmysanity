@@ -164,11 +164,11 @@ public final class DestroyMolecules {
         .tag(Tags.SMOG)
         .build(),
 
-    AZANIDE = builder()
-            .id("azanide")
-            .structure(LegacyMolecularStructure.atom(LegacyElement.NITROGEN, -1).addAtom(LegacyElement.HYDROGEN).addAtom(LegacyElement.HYDROGEN))
-            .tag(Tags.ACUTELY_TOXIC)
-            .build(),
+    //AZANIDE = builder()
+            //.id("azanide")
+            //.structure(LegacyMolecularStructure.atom(LegacyElement.NITROGEN, -1).addAtom(LegacyElement.HYDROGEN).addAtom(LegacyElement.HYDROGEN))
+            //.tag(Tags.ACUTELY_TOXIC)
+            //.build(),
 
     BENZENE = builder()
         .id("benzene")
