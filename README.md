@@ -1,13 +1,12 @@
-# Destroy
+# Destroy - Snapshot 𝑖
 
-Destroy is a chemistry-themed add-on to the popular Create mod. Right now it's under development.
+A modified version of [Destroy](https://modrinth.com/mod/destroy/) that aims to fix several bugs which prevented the automation of many processes in Survival mode.
+Comes with a handful of quality of life features, including minor recipe tweaks and better readability when viewing chemical reactions in JEI.
 
-Find out more on the [Discord](https://discord.gg/6EBJ3AzbHu) and [Modrinth](https://modrinth.com/mod/destroy/) page.
+This is currently based on the 0.1.1 version, which is **not** compatible with the latest version of Create!
 
-Currently, 1.0 is in development. **This will still be a beta release**.
+Make sure you have the following mods installed before running this:
+- [Create 0.5.1j](https://modrinth.com/mod/create/version/1.20.1-0.5.1.j)
+- [Petrolpark's Library 1.4.2](https://modrinth.com/mod/petrolpark/version/1.20.1-1.4.2)
 
-# License
-
-All rights are reserved unless otherwise explicitly stated.
-
-
+If you run into any issues, please report them here, not on the main Destroy GitHub page. Thank you!
