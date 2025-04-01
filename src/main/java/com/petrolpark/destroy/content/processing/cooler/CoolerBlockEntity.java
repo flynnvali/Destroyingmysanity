@@ -2,6 +2,7 @@ package com.petrolpark.destroy.content.processing.cooler;
 
 import java.util.List;
 
+import com.petrolpark.destroy.chemistry.api.util.Constants;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

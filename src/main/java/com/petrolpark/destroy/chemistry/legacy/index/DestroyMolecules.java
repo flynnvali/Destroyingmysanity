@@ -617,13 +617,6 @@ public final class DestroyMolecules {
         .hypothetical()
         .translationKey("amide")
         .build(),
-    
-    GENERIC_AMINE = builder()
-        .id("generic_amine")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:RC(R)(R)N"))
-        .hypothetical()
-        .translationKey("amine")
-        .build(),
 
     GENERIC_BORANE = builder()
         .id("generic_borane")

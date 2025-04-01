@@ -53,6 +53,7 @@
         "PipeConnectionMixin",
         "PlayerMixin",
         "PonderTagScreenMixin",
+        "PortableStorageInterfaceMovementMixin",
         "SchematicannonInventoryMixin",
         "SequencedAssemblyRecipeMixin",
         "ServerGamePacketListenerImplMixin",
