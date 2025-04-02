@@ -331,12 +331,6 @@ public class VatSideBlockEntity extends CopycatBlockEntity implements IHaveLabGo
         VatControllerBlockEntity vatController = getController();
         if (vatController == null) return;
 
-        float newPower = IVatHeaterBlock.getHeatingPower(getLevel(), heaterOrLampPos, direction.getOpposite());
-        if (newPower != oldPower) {
-            vatController.changeHeatingPower(newPower - oldPower);
-            oldPower = newPower;
-        };
-
         float newUVPower = 0f;
         if (VatMaterial.getMaterial(getMaterial()).map(VatMaterial::transparent).orElse(false)) {
             newUVPower = IUVLampBlock.getUVPower(getLevel(), heaterOrLampPos, direction.getOpposite());
@@ -521,7 +515,8 @@ public class VatSideBlockEntity extends CopycatBlockEntity implements IHaveLabGo
         if (getDisplayType().showsTemperature) {
             TemperatureUnit unit = DestroyAllConfigs.CLIENT.chemistry.temperatureUnit.get();
             DestroyLang.translate("tooltip.vat.temperature", unit.of(controller.getTemperature(), df)).style(ChatFormatting.WHITE).forGoggles(tooltip);
-            if (DestroyAllConfigs.CLIENT.chemistry.nerdMode.get()) DestroyLang.translate("tooltip.vat.power", df.format(controller.heatingPower / 1000f)).forGoggles(tooltip);
+            DestroyLang.translate("tooltip.vat.temperature.outer", unit.of(controller.getVatTemperature(), df)).style(ChatFormatting.WHITE).forGoggles(tooltip);
+            //if (DestroyAllConfigs.CLIENT.chemistry.nerdMode.get()) DestroyLang.translate("tooltip.vat.power", df.format(controller.heatingPower / 1000f)).forGoggles(tooltip);
         } else if (getDisplayType().showsPressure) {
             Vat vat = getVatOptional().get();
             DestroyLang.translate("tooltip.vat.pressure.header").style(ChatFormatting.WHITE).forGoggles(tooltip);

@@ -10,11 +10,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.petrolpark.destroy.DestroyAdvancementTrigger;
-import com.petrolpark.destroy.DestroyBlockEntityTypes;
-import com.petrolpark.destroy.DestroyBlocks;
-import com.petrolpark.destroy.DestroyFluids;
-import com.petrolpark.destroy.DestroyRecipeTypes;
+import com.petrolpark.destroy.*;
 import com.petrolpark.destroy.chemistry.api.util.Constants;
 import com.petrolpark.destroy.chemistry.legacy.LegacyMixture;
 import com.petrolpark.destroy.chemistry.legacy.LegacyMixture.ReactionContext;
@@ -27,6 +23,7 @@ import com.petrolpark.destroy.core.block.entity.IHaveLabGoggleInformation;
 import com.petrolpark.destroy.core.block.entity.ISpecialWhenHoveredBlockEntity;
 import com.petrolpark.destroy.core.chemistry.MixtureContentsDisplaySource;
 import com.petrolpark.destroy.core.chemistry.recipe.MixtureConversionRecipe;
+import com.petrolpark.destroy.core.chemistry.vat.material.VatMaterial;
 import com.petrolpark.destroy.core.chemistry.vat.VatFluidTankBehaviour.VatTankSegment.VatFluidTank;
 import com.petrolpark.destroy.core.chemistry.vat.VatSideBlockEntity.DisplayType;
 import com.petrolpark.destroy.core.data.advancement.DestroyAdvancementBehaviour;
@@ -59,6 +56,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -89,15 +87,13 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
      * This Mixture belongs to an imaginary Fluid Stack with a size equal to the capacity of the Vat.
      */
     protected LegacyMixture cachedMixture;
-    /**
-     * The power (in W) being supplied to this Vat. This can be positive (if the Vat is
-     * being heated) or negative (if it is being cooled).
-     */
-    protected float heatingPower;
+
     /**
      * The amount of UV being supplied to this Vat.
      */
     protected float UVPower;
+
+    protected float vatTemperature;
 
     /*
      * As the client side doesn't have access to the cached Mixture, store the pressure, temperature, and whether it is boiling or at equilibrium
@@ -198,20 +194,41 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
             int cyclesPerTick = getSimulationLevel();
 
             // Heating
+            int vatSurfaceArea = vat.getSideBlockPositions().size();
+            float ambientTemperature = Pollution.getLocalTemperature(getLevel(), getBlockPos());
+            float averageTemperature = (float)vat.getSideBlockPositions().stream().mapToDouble(pos ->
+                getLevel().getBlockEntity(pos, DestroyBlockEntityTypes.VAT_SIDE.get())
+                    .map(vatSide -> IVatHeaterBlock.getTemperatureDifference(getLevel(), pos.relative(vatSide.direction), vatSide.direction.getOpposite())
+                        * VatMaterial.getMaterial(vatSide.getMaterial()).get().thermalConductivity())
+                    .orElse(0f)).sum();
+            averageTemperature = Math.max(0f, ambientTemperature + averageTemperature / vat.getConductance());
+
+            float vatSideHeatCapacity = 3000f*1000f; // Assume all Vat materials have the same heat capacity for now
+            float vatConductance = vat.getConductance()*1000f;
+
+            float mixtureConcentration = cachedMixture.getTotalConcentration();
+
             for (int cycle = 0; cycle < cyclesPerTick; cycle++) {
-                float energyChange = heatingPower;
+                // Conduct heat between the Vat's walls and its surroundings
+                float energyChangeExternal = (averageTemperature - vatTemperature) * vatConductance; // Fourier's Law (sort of), the divide by 20 is for 20 ticks per second
+                energyChangeExternal /= 20 * cyclesPerTick;
 
-                // Treat the walls of the Vat like an additional volume of material with its own heat capacity
-                float vatSideVolume = vat.getSideBlockPositions().size() * 1000f / Constants.MILLIBUCKETS_PER_LITER;
-                float vatSideHeatCapacity = 3000f;
+                // Conduct heat between the Vat's walls and its contents
+                float energyChangeInternal = (vatTemperature - cachedMixture.getTemperature()) * vatConductance;
+                energyChangeInternal /= 20 * cyclesPerTick;
 
-                energyChange += (Pollution.getLocalTemperature(getLevel(), getBlockPos()) - cachedMixture.getTemperature()) * vat.getConductance(); // Fourier's Law (sort of), the divide by 20 is for 20 ticks per second
-                energyChange /= 20 * cyclesPerTick;
-                if (Math.abs(energyChange / (fluidAmount * cachedMixture.getVolumetricHeatCapacity())) > 0.001f && fluidAmount != 0d) { // Only bother heating if the temperature change will be somewhat significant
-                    cachedMixture.heatWithBuffer(energyChange / fluidAmount, fluidAmount, vatSideHeatCapacity, vatSideVolume);
+                vatTemperature += (energyChangeExternal - energyChangeInternal) / vatSideHeatCapacity;
+
+                // Prevent temperature from exploding to infinity when conductance is very high (e.g. copper vat)
+                // (can't be bothered to do proper integration this is just a test anyway)
+                float predictedMixtureTemperatureChange = Math.abs(energyChangeInternal / (fluidAmount * cachedMixture.getVolumetricHeatCapacity()));
+                if(predictedMixtureTemperatureChange > Math.abs(vatTemperature - cachedMixture.getTemperature()))
+                    energyChangeInternal *= 0.99f * Math.abs(vatTemperature - cachedMixture.getTemperature()) / predictedMixtureTemperatureChange;
+
+                // Only bother heating if the temperature change will be somewhat significant
+                if (predictedMixtureTemperatureChange > 0.001f && fluidAmount != 0d) {
+                    cachedMixture.heat(energyChangeInternal / fluidAmount);
                     cachedMixture.disturbEquilibrium();
-                } else {
-                    break;
                 };
             };
 
@@ -287,8 +304,9 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
     protected void read(CompoundTag tag, boolean clientPacket) {
         super.read(tag, clientPacket);
 
-        heatingPower = tag.getFloat("HeatingPower");
         UVPower = tag.getFloat("UVPower");
+
+        vatTemperature = tag.getFloat("VatTemperature");
 
         // Vat
         if (tag.contains("Vat", Tag.TAG_COMPOUND)) {
@@ -319,8 +337,9 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
     protected void write(CompoundTag tag, boolean clientPacket) {
         super.write(tag, clientPacket);
 
-        tag.putFloat("HeatingPower", heatingPower);
         tag.putFloat("UVPower", UVPower);
+
+        tag.putFloat("VatTemperature", vatTemperature);
 
         // Vat
         if (vat.isPresent()) {
@@ -450,6 +469,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
         });
 
         vat = Optional.of(newVat.get());
+        vatTemperature = Pollution.getLocalTemperature(getLevel(), getBlockPos());
         finalizeVatConstruction();
         updateCachedMixture();
         flush();
@@ -457,6 +477,20 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
 
         return true;
     };
+
+    public void recomputeVatPower() {
+        if (!hasLevel() || getLevel().isClientSide() || !vat.isPresent()) return;
+
+        vat.get().getSideBlockPositions().forEach(pos -> {
+            BlockState state = getLevel().getBlockState(pos);
+            if (state.is(DestroyBlocks.VAT_CONTROLLER.get())) return;
+
+            getLevel().getBlockEntity(pos, DestroyBlockEntityTypes.VAT_SIDE.get()).ifPresent(vatSide -> {
+                BlockPos adjacentPos = pos.relative(vatSide.direction);
+                vatSide.setPowerFromAdjacentBlock(adjacentPos);
+            });
+        });
+    }
 
     private void finalizeVatConstruction() {
         tankBehaviour.allowExtraction(); // Enable extraction from the Vat now it actually exists
@@ -501,7 +535,6 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
                 });
             };
         });
-        heatingPower = 0f;
         UVPower = 0f;
 
         cachedMixture = new LegacyMixture();
@@ -593,11 +626,6 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
         }
     };
 
-    public void changeHeatingPower(float powerChange) {
-        heatingPower += powerChange;
-        sendData();
-    };
-
     public void changeUVPower(float UVChange) {
         UVPower += UVChange;
         if (cachedMixture != null) cachedMixture.disturbEquilibrium();
@@ -630,6 +658,11 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
         if (getLevel().isClientSide()) return temperature.getChaseTarget(); // It thinks getLevel() might be null (it's not)
         if (getVatOptional().isEmpty() || cachedMixture == null) return Pollution.getLocalTemperature(getLevel(), getBlockPos());
         return cachedMixture.getTemperature();
+    };
+
+    @SuppressWarnings("null")
+    public float getVatTemperature() {
+        return vatTemperature;
     };
 
     /**

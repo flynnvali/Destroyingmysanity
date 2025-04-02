@@ -408,14 +408,7 @@ public class LegacyMixture extends ReadOnlyMixture {
      * @param energy In joules per bucket
      */
     public void heat(float energyDensity) {
-        heat(energyDensity, getVolumetricHeatCapacity());
-    };
-
-    public void heatWithBuffer(float energyDensity, float volume, float bufferVolumetricHeatCapacity, float bufferVolume) {
-        heat(energyDensity, (getVolumetricHeatCapacity() * volume + bufferVolumetricHeatCapacity * bufferVolume) / (volume + bufferVolume));
-    };
-
-    public void heat(float energyDensity, float volumetricHeatCapacity) {
+        float volumetricHeatCapacity = getVolumetricHeatCapacity();
         if (volumetricHeatCapacity == 0f) return;
 
         float temperatureChange = energyDensity / volumetricHeatCapacity; // The theoretical temperature change if no boiling or condensation occurs
