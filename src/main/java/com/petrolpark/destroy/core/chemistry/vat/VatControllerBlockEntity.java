@@ -194,7 +194,6 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
             int cyclesPerTick = getSimulationLevel();
 
             // Heating
-            int vatSurfaceArea = vat.getSideBlockPositions().size();
             float ambientTemperature = Pollution.getLocalTemperature(getLevel(), getBlockPos());
             float averageTemperature = (float)vat.getSideBlockPositions().stream().mapToDouble(pos ->
                 getLevel().getBlockEntity(pos, DestroyBlockEntityTypes.VAT_SIDE.get())
@@ -203,33 +202,58 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
                     .orElse(0f)).sum();
             averageTemperature = Math.max(0f, ambientTemperature + averageTemperature / vat.getConductance());
 
-            float vatSideHeatCapacity = 3000f*1000f; // Assume all Vat materials have the same heat capacity for now
-            float vatConductance = vat.getConductance()*1000f;
+            int vatSideVolume = vat.getSideBlockPositions().size();
 
-            float mixtureConcentration = cachedMixture.getTotalConcentration();
+            // The volumetric heat capacity of one Vat block in joules per bucket-kelvin (1 block = 1 bucket)
+            // Assume all Vat materials have the same heat capacity for now
+            float vatSideHeatCapacity = 3000f * 10f;
 
-            for (int cycle = 0; cycle < cyclesPerTick; cycle++) {
+            // 10 is an arbitrary number and I'm not entirely sure where it's coming from but I find that without it, Vats don't transfer enough energy
+            // to their liquid contents to raise their temperature within a reasonable amount of time.
+            // Maybe I missed some important detail, or something's wrong with the way conductance is calculated, or maybe this is completely realistic and it only feels
+            // weird in game because it's easy to forget you're heating liquid through 1 meter of solid metal. Either way, gameplay before realism.
+            float vatConductance = vat.getConductance()*10f;
+
+            boolean settled = false;
+
+            for (int cycle = 0; cycle < cyclesPerTick && !settled ; cycle++) {
+                settled = true;
+
                 // Conduct heat between the Vat's walls and its surroundings
                 float energyChangeExternal = (averageTemperature - vatTemperature) * vatConductance; // Fourier's Law (sort of), the divide by 20 is for 20 ticks per second
                 energyChangeExternal /= 20 * cyclesPerTick;
 
+                float energyChangeInternal = 0f;
+
                 // Conduct heat between the Vat's walls and its contents
-                float energyChangeInternal = (vatTemperature - cachedMixture.getTemperature()) * vatConductance;
-                energyChangeInternal /= 20 * cyclesPerTick;
+                if(fluidAmount > 0d)
+                {
+                    energyChangeInternal = (vatTemperature - cachedMixture.getTemperature()) * vatConductance;
+                    energyChangeInternal /= 20 * cyclesPerTick;
 
-                vatTemperature += (energyChangeExternal - energyChangeInternal) / vatSideHeatCapacity;
+                    // Prevent temperature from exploding to infinity when conductance is very high (e.g. copper vat)
+                    // (can't be bothered to do proper integration this is just a test anyway)
+                    float predictedMixtureTemperatureChange = Math.abs(energyChangeInternal / (fluidAmount * cachedMixture.getVolumetricHeatCapacity()));
+                    float temperatureDifference = Math.abs(vatTemperature - cachedMixture.getTemperature());
 
-                // Prevent temperature from exploding to infinity when conductance is very high (e.g. copper vat)
-                // (can't be bothered to do proper integration this is just a test anyway)
-                float predictedMixtureTemperatureChange = Math.abs(energyChangeInternal / (fluidAmount * cachedMixture.getVolumetricHeatCapacity()));
-                if(predictedMixtureTemperatureChange > Math.abs(vatTemperature - cachedMixture.getTemperature()))
-                    energyChangeInternal *= 0.99f * Math.abs(vatTemperature - cachedMixture.getTemperature()) / predictedMixtureTemperatureChange;
+                    // Only bother heating if the temperature change will be somewhat significant
+                    if (temperatureDifference > 0.001f || predictedMixtureTemperatureChange > 0.001f)
+                    {
+                        if (predictedMixtureTemperatureChange > temperatureDifference)
+                            energyChangeInternal *= 0.99f * Math.abs(vatTemperature - cachedMixture.getTemperature()) / predictedMixtureTemperatureChange;
 
-                // Only bother heating if the temperature change will be somewhat significant
-                if (predictedMixtureTemperatureChange > 0.001f && fluidAmount != 0d) {
-                    cachedMixture.heat(energyChangeInternal / fluidAmount);
-                    cachedMixture.disturbEquilibrium();
+                        cachedMixture.heat(energyChangeInternal / fluidAmount);
+                        cachedMixture.disturbEquilibrium();
+                        settled = false;
+                    }
                 };
+
+                // Temperature change = Energy change / (Volume * Volumetric heat capacity)
+                float vatTemperatureChange = (energyChangeExternal - energyChangeInternal) / (vatSideVolume * vatSideHeatCapacity);
+                if (Math.abs(vatTemperatureChange) > 0.001f) {
+                    vatTemperature += vatTemperatureChange;
+                    settled = false;
+                }
             };
 
             // Take all Items out of the Inventory
@@ -271,7 +295,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
 
             // Releasing gas if there is an open vent
             VatSideBlockEntity openVent = getOpenVent();
-            if (openVent != null && !getGasTank().isEmptyOrFullOfAir()) {
+            if (openVent != null && !getGasTank().wasFlushed()) {
                 PollutionHelper.pollute(getLevel(), openVent.getBlockPos().relative(openVent.direction), 10, flush());
                 updateCachedMixture();
             };

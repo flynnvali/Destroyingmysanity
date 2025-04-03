@@ -254,6 +254,10 @@ public class VatFluidTankBehaviour extends GeniusFluidTankBehaviour {
                 return isEmpty() || flushed;
             };
 
+            public boolean wasFlushed() {
+                return flushed;
+            };
+
             @Override
             public boolean isFluidValid(int tank, FluidStack stack) {
                 return DestroyFluids.isMixture(stack);
