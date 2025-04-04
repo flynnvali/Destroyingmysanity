@@ -60,7 +60,7 @@ public class ReactionInBasinRecipe extends BasinRecipe {
         Level level = basin.getLevel();
         BlockPos pos = basin.getBlockPos();
         float outsideTemperature = Pollution.getLocalTemperature(level, pos);
-        float heatingTemperature = outsideTemperature + IVatHeaterBlock.getTemperatureDifference(level, pos.below(), Direction.UP);
+        float heatingTemperature = outsideTemperature + IVatHeaterBlock.getRelativeTemperature(level, pos.below(), Direction.UP);
         ExtendedBasinBehaviour behaviour = basin.getBehaviour(ExtendedBasinBehaviour.TYPE);
         boolean shouldUpdateBasin = false;
 

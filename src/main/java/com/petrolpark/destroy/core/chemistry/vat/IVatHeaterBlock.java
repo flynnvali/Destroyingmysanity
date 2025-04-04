@@ -15,23 +15,23 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface IVatHeaterBlock {
 
     /**
-     * Get the difference in temperature (in kelvin) between the given Block State and its environment.
+     * Get the temperature (in kelvin) of the given Block State relative to ambient temperature.
      * @param level
      * @param blockState
      * @param blockPos
      * @param face The face of the Block State touching the Vat
      * @return Positive value for heaters, negative value for coolers
      */
-    float getTemperatureDifference(Level level, BlockState blockState, BlockPos blockPos, Direction face);
+    float getRelativeTemperature(Level level, BlockState blockState, BlockPos blockPos, Direction face);
 
-    static float getTemperatureDifference(Level level, BlockPos blockPos, Direction face) {
+    static float getRelativeTemperature(Level level, BlockPos blockPos, Direction face) {
         BlockState state = level.getBlockState(blockPos);
 
         if (state.isAir()) return 0f;
 
         // IVatHeaters
         if (state.getBlock() instanceof IVatHeaterBlock heater) {
-            return heater.getTemperatureDifference(level, state, blockPos, face);
+            return heater.getRelativeTemperature(level, state, blockPos, face);
         };
 
         // Blaze Burners, Coolers, etc.

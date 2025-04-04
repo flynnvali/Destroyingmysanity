@@ -340,7 +340,7 @@ public class VatSideBlockEntity extends CopycatBlockEntity implements IHaveLabGo
             vatController.changeUVPower(newUVPower - oldUV);
             oldUV = newUVPower;
         };
-
+        vatController.recomputeHeatSources();
         sendData();
     };
 

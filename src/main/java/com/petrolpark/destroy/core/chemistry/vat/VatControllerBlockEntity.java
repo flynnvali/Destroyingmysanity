@@ -56,7 +56,6 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -93,7 +92,15 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
      */
     protected float UVPower;
 
+    /**
+     * The temperature of the walls of the Vat (not its contents)
+     */
     protected float vatTemperature;
+
+    /**
+     * The average temperature outside the Vat relative to ambient temperature
+     */
+    protected float averageOutsideRelativeTemperature;
 
     /*
      * As the client side doesn't have access to the cached Mixture, store the pressure, temperature, and whether it is boiling or at equilibrium
@@ -195,12 +202,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
 
             // Heating
             float ambientTemperature = Pollution.getLocalTemperature(getLevel(), getBlockPos());
-            float averageTemperature = (float)vat.getSideBlockPositions().stream().mapToDouble(pos ->
-                getLevel().getBlockEntity(pos, DestroyBlockEntityTypes.VAT_SIDE.get())
-                    .map(vatSide -> IVatHeaterBlock.getTemperatureDifference(getLevel(), pos.relative(vatSide.direction), vatSide.direction.getOpposite())
-                        * VatMaterial.getMaterial(vatSide.getMaterial()).get().thermalConductivity())
-                    .orElse(0f)).sum();
-            averageTemperature = Math.max(0f, ambientTemperature + averageTemperature / vat.getConductance());
+            float averageTemperature = Math.max(0f, ambientTemperature + averageOutsideRelativeTemperature);
 
             int vatSideVolume = vat.getSideBlockPositions().size();
 
@@ -329,7 +331,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
         super.read(tag, clientPacket);
 
         UVPower = tag.getFloat("UVPower");
-
+        averageOutsideRelativeTemperature = tag.getFloat("AverageOutsideRelativeTemperature");
         vatTemperature = tag.getFloat("VatTemperature");
 
         // Vat
@@ -362,7 +364,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
         super.write(tag, clientPacket);
 
         tag.putFloat("UVPower", UVPower);
-
+        tag.putFloat("AverageOutsideRelativeTemperature", averageOutsideRelativeTemperature);
         tag.putFloat("VatTemperature", vatTemperature);
 
         // Vat
@@ -502,18 +504,19 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
         return true;
     };
 
-    public void recomputeVatPower() {
+    public void recomputeHeatSources() {
         if (!hasLevel() || getLevel().isClientSide() || !vat.isPresent()) return;
 
-        vat.get().getSideBlockPositions().forEach(pos -> {
-            BlockState state = getLevel().getBlockState(pos);
-            if (state.is(DestroyBlocks.VAT_CONTROLLER.get())) return;
+        float newRelativeTemperature = (float)vat.get().getSideBlockPositions().stream().mapToDouble(pos ->
+            getLevel().getBlockEntity(pos, DestroyBlockEntityTypes.VAT_SIDE.get())
+                .map(vatSide -> IVatHeaterBlock.getRelativeTemperature(getLevel(), pos.relative(vatSide.direction), vatSide.direction.getOpposite())
+                    * VatMaterial.getMaterial(vatSide.getMaterial()).get().thermalConductivity())
+                .orElse(0f)).sum() / vat.get().getConductance();
 
-            getLevel().getBlockEntity(pos, DestroyBlockEntityTypes.VAT_SIDE.get()).ifPresent(vatSide -> {
-                BlockPos adjacentPos = pos.relative(vatSide.direction);
-                vatSide.setPowerFromAdjacentBlock(adjacentPos);
-            });
-        });
+        if(newRelativeTemperature != averageOutsideRelativeTemperature) {
+            averageOutsideRelativeTemperature = newRelativeTemperature;
+            sendData();
+        }
     }
 
     private void finalizeVatConstruction() {
@@ -560,6 +563,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
             };
         });
         UVPower = 0f;
+        averageOutsideRelativeTemperature = 0f;
 
         cachedMixture = new LegacyMixture();
         vat = Optional.empty();
@@ -680,7 +684,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
     @SuppressWarnings("null")
     public float getTemperature() { 
         if (getLevel().isClientSide()) return temperature.getChaseTarget(); // It thinks getLevel() might be null (it's not)
-        if (getVatOptional().isEmpty() || cachedMixture == null) return Pollution.getLocalTemperature(getLevel(), getBlockPos());
+        if (getVatOptional().isEmpty() || cachedMixture == null) return vatTemperature;
         return cachedMixture.getTemperature();
     };
 
