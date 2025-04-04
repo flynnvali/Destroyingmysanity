@@ -240,7 +240,7 @@ public class VatControllerBlockEntity extends SmartBlockEntity implements IHaveL
                     if (temperatureDifference > 0.001f || predictedMixtureTemperatureChange > 0.001f)
                     {
                         if (predictedMixtureTemperatureChange > temperatureDifference)
-                            energyChangeInternal *= 0.99f * Math.abs(vatTemperature - cachedMixture.getTemperature()) / predictedMixtureTemperatureChange;
+                            energyChangeInternal *= 0.99f * temperatureDifference / predictedMixtureTemperatureChange;
 
                         cachedMixture.heat(energyChangeInternal / fluidAmount);
                         cachedMixture.disturbEquilibrium();

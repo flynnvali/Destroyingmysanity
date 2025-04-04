@@ -59,8 +59,8 @@ public class ReactionInBasinRecipe extends BasinRecipe {
         
         Level level = basin.getLevel();
         BlockPos pos = basin.getBlockPos();
-        float heatingPower = IVatHeaterBlock.getHeatingPower(level, pos.below(), Direction.UP);
         float outsideTemperature = Pollution.getLocalTemperature(level, pos);
+        float heatingTemperature = outsideTemperature + IVatHeaterBlock.getTemperatureDifference(level, pos.below(), Direction.UP);
         ExtendedBasinBehaviour behaviour = basin.getBehaviour(ExtendedBasinBehaviour.TYPE);
         boolean shouldUpdateBasin = false;
 
@@ -101,7 +101,7 @@ public class ReactionInBasinRecipe extends BasinRecipe {
         tryReact: if (canReact) {
             // TODO modify temp according to Heat Level
             LegacyMixture mixture = LegacyMixture.mix(mixtures);
-            ReactionInBasinResult result = mixture.reactInBasin(totalAmount, availableItemsCopy, heatingPower, outsideTemperature); // Mutably react the Mixture and change the Item Stacks
+            ReactionInBasinResult result = mixture.reactInBasin(totalAmount, availableItemsCopy, heatingTemperature, outsideTemperature); // Mutably react the Mixture and change the Item Stacks
 
             // If equilibrium was not disturbed, don't do anything else
             if (result.ticks() == 0) {
@@ -109,7 +109,7 @@ public class ReactionInBasinRecipe extends BasinRecipe {
                 break tryReact;
             };
 
-            Phases phases = mixture.separatePhases(result.amount());
+            Phases phases = mixture.separatePhases(totalAmount);
 
             // Add the resultant Mixture to the results for this Recipe
             FluidStack outputMixtureStack = MixtureFluid.of((int)Math.round(phases.liquidVolume()), phases.liquidMixture());
@@ -145,7 +145,10 @@ public class ReactionInBasinRecipe extends BasinRecipe {
             gatherReactionResults(result.reactionResults(), reactionResults, builder); // Gather all 
 
             behaviour.setReactionResults(reactionResults); // Schedule the Reaction Results to occur once the Mixing has finished
-            behaviour.evaporatedFluid = MixtureFluid.of((int)Math.round(phases.gasVolume()), phases.gasMixture());
+            if(phases.gasMixture().getTotalConcentration() > 0f)
+                behaviour.evaporatedFluid = MixtureFluid.of((int)Math.round(phases.gasVolume()), phases.gasMixture());
+            else
+                behaviour.evaporatedFluid = FluidStack.EMPTY;
             shouldUpdateBasin = true;
         };
 

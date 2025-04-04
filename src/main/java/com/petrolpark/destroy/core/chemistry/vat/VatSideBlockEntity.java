@@ -232,7 +232,6 @@ public class VatSideBlockEntity extends CopycatBlockEntity implements IHaveLabGo
         };
         controllerPosition = NbtUtils.readBlockPos(tag.getCompound("ControllerPosition")).offset(getBlockPos());
         displayType = DisplayType.values()[tag.getInt("DisplayType")];
-        oldPower = tag.getFloat("OldHeatingPower");
         oldUV = tag.getFloat("OldUVPower");
         if (tag.contains("InitializationTicks", Tag.TAG_INT)) initializationTicks = tag.getInt("InitializationTicks"); else initializationTicks = 0;
         if (clientPacket) {
@@ -256,7 +255,6 @@ public class VatSideBlockEntity extends CopycatBlockEntity implements IHaveLabGo
         if (direction != null) tag.putInt("Side", direction.ordinal());
         if (controllerPosition != null) tag.put("ControllerPosition", NbtUtils.writeBlockPos(controllerPosition.subtract(getBlockPos())));
         tag.putInt("DisplayType", displayType.ordinal());
-        tag.putFloat("OldHeatingPower", oldPower);
         tag.putFloat("OldUVPower", oldUV);
         if (initializationTicks > 0) tag.putInt("InitializationTicks", initializationTicks);
         if (clientPacket) {

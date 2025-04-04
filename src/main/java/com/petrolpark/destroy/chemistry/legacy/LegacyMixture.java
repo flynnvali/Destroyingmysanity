@@ -723,18 +723,36 @@ public class LegacyMixture extends ReadOnlyMixture {
      * @param heatingPower The power being supplied to this Basin by the {@link com.petrolpark.destroy.core.chemistry.vat.IVatHeaterBlock heater} below it.
      * @param outsideTemperature The {@link com.petrolpark.destroy.core.pollution.Pollution#getLocalTemperature temperature} outside the Basin.
      */
-    public ReactionInBasinResult reactInBasin(int volume, List<ItemStack> availableStacks, float heatingPower, float outsideTemperature) {
+    public ReactionInBasinResult reactInBasin(int volume, List<ItemStack> availableStacks, float heatingTemperature, float outsideTemperature) {
         float volumeInLiters = (float)volume / Constants.MILLIBUCKETS_PER_LITER;
         int ticks = 0;
 
+        // Bottom face receives heat, other faces dissipate heat into the environment
+        // The bottom face is more conductive than the other faces, this is balanced in such a way that a kindled Blaze Burner
+        // reaches roughly 130°C and a superheated Blaze Burner reaches roughly 360°C, hot enough to boil mercury
+        float averageTemperature = (1.35f * heatingTemperature + 4.65f * outsideTemperature) / 6f;
+
         ReactionContext context = new ReactionContext(availableStacks, 0f, false); 
         dissolveItems(context, volumeInLiters); // Dissolve all Items
-        while (!equilibrium && ticks < 600) { // React the Mixture
-            float energyChange = heatingPower / TICKS_PER_SECOND;
-            energyChange += (outsideTemperature - temperature) * 100f / TICKS_PER_SECOND; // Fourier's Law (sort of), the Basin has a fixed conductance of 100 andthe divide by 20 is for 20 ticks per second
-            if (Math.abs(energyChange) > 0.0001f) {
-                heat(1000 * energyChange / volume); // 1000 converts getFluidAmount() in mB to Buckets
+        while (ticks < 600) { // React the Mixture
+            // Fourier's Law (sort of), the Basin has a fixed conductance and the divide by 20 is for 20 ticks per second
+            // The Basin is given unrealistically high conductance to help make it more reliable by ensuring that the
+            // contained Mixture reaches its target temperature quickly.
+            float temperatureDifference = averageTemperature - temperature;
+            float energyChange = temperatureDifference * 300000f / TICKS_PER_SECOND;
+            float predictedMixtureTemperatureChange = Math.abs(energyChange / (volumeInLiters * getVolumetricHeatCapacity()));
+
+            if (predictedMixtureTemperatureChange > 0.001f) {
+                // Prevent temperature from exploding to infinity due to the high conductance and time step
+                // This is a certified Euler moment and I'm too lazy to switch over to a fancier integrator for the moment
+                if (predictedMixtureTemperatureChange > Math.abs(temperatureDifference))
+                    energyChange *= 0.99f * Math.abs(temperatureDifference) / predictedMixtureTemperatureChange;
+
+                heat(energyChange / volumeInLiters);
+            } else if(equilibrium) {
+                break;
             };
+
             reactForTick(context, 1);
             ticks++;
         };

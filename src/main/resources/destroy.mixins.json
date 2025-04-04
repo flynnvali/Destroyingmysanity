@@ -27,6 +27,7 @@
         "compat.jei.MixingCategoryMixin",
         "compat.jei.PackingCategoryMixin",
         "compat.tfmg.AdvancedDistillationCategoryMixin",
+        "patch.ContaminantMixin",
         "AbstractContainerMenuMixin",
         "AirCurrentMixin",
         "BasinBlockEntityMixin",
