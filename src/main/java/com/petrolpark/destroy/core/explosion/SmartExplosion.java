@@ -262,7 +262,7 @@ public class SmartExplosion extends Explosion {
      */
     public void explodeBlock(BlockPos pos) {
         BlockState state = level.getBlockState(pos);
-        if (level instanceof ServerLevel serverLevel) {
+        if (level instanceof ServerLevel serverLevel && state.canDropFromExplosion(level, pos, this)) {
             BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
             LootParams.Builder builder = new LootParams.Builder(serverLevel)
                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))

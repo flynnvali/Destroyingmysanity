@@ -203,7 +203,7 @@ public class DestroyBlocks {
         .properties(p -> p
             .mapColor(MapColor.SNOW)
         ).item(MixedExplosiveBlockItem::new)
-        .onRegister(registerPrimeableBombDispenserBehaviour())
+        .onRegister(item -> DispenserBlock.registerBehavior(item, ((MixedExplosiveBlock)item.getBlock()).new CustomExplosiveMixDispenseBehaviour()))
         .build()
         .register();
 
