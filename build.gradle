@@ -233,6 +233,10 @@ dependencies {
     implementation fg.deobf("com.rbasamoyai:ritchiesprojectilelib:1.0.0-369e88d+1.20.1-forge")
     implementation fg.deobf("com.rbasamoyai:createbigcannons:${cbc_version}")
 
+    // Supplementaries
+    implementation fg.deobf("maven.modrinth:moonlight:forge_1.20-2.13.71")
+    implementation fg.deobf("maven.modrinth:supplementaries:1.20-3.1.18")
+
     // Embeddium
     implementation fg.deobf("maven.modrinth:embeddium:${embeddium_version}+mc${minecraft_version}")
 
