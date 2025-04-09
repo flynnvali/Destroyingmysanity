@@ -1,3 +1,4 @@
+
 {
     "required": "true",
     "package": "com.petrolpark.destroy.mixin",
@@ -26,7 +27,6 @@
         "compat.jei.DeployingCategoryMixin",
         "compat.jei.MixingCategoryMixin",
         "compat.jei.PackingCategoryMixin",
-        "compat.tfmg.AdvancedDistillationCategoryMixin",
         "AbstractContainerMenuMixin",
         "AirCurrentMixin",
         "BasinBlockEntityMixin",
@@ -38,6 +38,7 @@
         "FilterItemStackMixin",
         "FluidIngredientMixin",
         "FluidNetworkMixin",
+        "FluidPropagatorMixin",
         "FluidTankBlockEntityMixin",
         "GenericItemFillingMixin",
         "GhostItemMenuMixin",
