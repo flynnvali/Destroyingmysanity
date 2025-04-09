@@ -6,6 +6,7 @@ import com.petrolpark.destroy.chemistry.legacy.LegacyBond.BondType;
 import com.petrolpark.destroy.chemistry.legacy.genericreaction.DoubleGroupGenericReaction;
 import com.petrolpark.destroy.chemistry.legacy.genericreaction.GenericReactant;
 import com.petrolpark.destroy.chemistry.legacy.index.DestroyGroupTypes;
+import com.petrolpark.destroy.chemistry.legacy.index.DestroyMolecules;
 import com.petrolpark.destroy.chemistry.legacy.index.group.AcetylideGroup;
 import com.petrolpark.destroy.chemistry.legacy.index.group.CarbonylGroup;
 
@@ -26,16 +27,18 @@ public class AcetylideNucleophilicAddition extends DoubleGroupGenericReaction<Ca
         LegacyMolecularStructure acetylideGroup = secondReactant.molecule.shallowCopyStructure();
         carbonylGroup.moveTo(firstReactant.group.carbon)
                 .remove(firstReactant.group.oxygen)
-                .addGroup(LegacyMolecularStructure.atom(LegacyElement.OXYGEN, -1d), true, BondType.SINGLE);
+                .addGroup(LegacyMolecularStructure.alcohol());
        acetylideGroup.moveTo(secondReactant.group.carbonWithCharge)
                .replace(secondReactant.group.neutralCarbon, new LegacyAtom(LegacyElement.CARBON, 0d))
                .replace(secondReactant.group.carbonWithCharge, new LegacyAtom(LegacyElement.CARBON, 0d));
         LegacyMolecularStructure product = LegacyMolecularStructure.joinFormulae(carbonylGroup, acetylideGroup, BondType.SINGLE);
 
         return reactionBuilder()
+                .addReactant(DestroyMolecules.SULFURIC_ACID)
                 .addReactant(firstReactant.molecule, 1)
                 .addReactant(secondReactant.molecule, 1)
                 .addProduct(moleculeBuilder().structure(product).build(), 1)
+                .addProduct(DestroyMolecules.HYDROGENSULFATE)
                 .build();
     };
 

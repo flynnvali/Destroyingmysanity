@@ -974,7 +974,7 @@
     "destroy.ponder.vat.uv.text_4": "More UV power is supplied by Blacklights placed directly adjacent to transparent sides of the Vat.",
 
     "destroy.generic_reaction.acetylide_addition": "[destroy:acetylide] Addition",
-    "destroy.generic_reaction.acetylide_addition.description": "A good way to create carbon-carbon {bonds destroy:bond} via the {addition, destroy:addition} of an [destroy:acetylide] to a [destroy:carbonyl].",
+    "destroy.generic_reaction.acetylide_addition.description": "A good way to create carbon-carbon {bonds, destroy:bond} via the {nucleophilic, destroy:nucleophile} {addition, destroy:addition} of an [destroy:acetylide] to a [destroy:carbonyl].",
     "destroy.generic_reaction.acetylide_hydration": "[destroy:acetylide] Hydration",
     "destroy.generic_reaction.acetylide_hydration.description": "The {hydrolysis, destroy:hydrolysis} of an [destroy:acetylide] and {deprotonation, destroy:deprotonation} of [destroy:water] to form an [destroy:alkyne] and a [destroy:hydroxide]",
     "destroy.generic_reaction.acyl_chloride_esterification": "[destroy:acyl_chloride] Esterification",
@@ -1056,7 +1056,7 @@
     "destroy.generic_reaction.halide_ammonia_substitution": "Ammonia Substitution",
     "destroy.generic_reaction.halide_ammonia_substitution.description": "The {nucleophilic, destroy:nucleophile} {substitution, destroy:substitution} of any organo{halide, destroy:halide} (not just a [destroy:chloride]) for an [destroy:amine] group.",
     "destroy.generic_reaction.halide_acetylide_substitution": "Acetylide Substitution",
-    "destroy.generic_reaction.halide_acetylide_substitution.description": "A versatile way to form a carbon-carbon {bond, destroy:bond} via the {nucleophilic, destroy:nucleophile} {substitution, destroy:substitution} of an [destroy:acetylide] group to any organo{halide, destroy:halide}.",
+    "destroy.generic_reaction.halide_acetylide_substitution.description": "A versatile way to form a carbon-carbon {bond, destroy:bond} via the {nucleophilic, destroy:nucleophile} {substitution, destroy:substitution} of any organo{halide, destroy:halide} for an [destroy:alkyne].",
     "destroy.generic_reaction.halide_cyanide_substitution": "Cyanide Substitution",
     "destroy.generic_reaction.halide_cyanide_substitution.description": "The {nucleophilic, destroy:nucleophile} {substitution, destroy:substitution} of any organo{halide, destroy:halide} (not just a [destroy:chloride]) for an [destroy:nitrile] group.",
     "destroy.generic_reaction.halide_hydroxide_substitution": "Hydroxide Substitution",
