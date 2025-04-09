@@ -21,9 +21,10 @@ public class SpongeInteractionMixin {
     public Integer fill(Level level, BlockPos pos, BlockState target, FluidOffer offer, Operation<Integer> original) {
         Integer result = original.call(level, pos, target, offer);
         if(result != null && result.intValue() > 0) {
+            // Voiding fluids by pouring them onto a sponge releases them into the atmosphere
             FluidStack fluidStack = SoftFluidStackImpl.toForgeFluid(offer.fluid().copyWithCount(result.intValue()));
             PollutionHelper.pollute(level, pos, 1.f, 1, fluidStack);
         };
-        return target.getBlock() == Blocks.SPONGE ? offer.minAmount() : null;
+        return result;
     }
 }
