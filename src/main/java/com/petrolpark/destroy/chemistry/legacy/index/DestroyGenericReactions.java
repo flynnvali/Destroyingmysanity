@@ -1,40 +1,7 @@
 package com.petrolpark.destroy.chemistry.legacy.index;
 
 
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AcylChlorideEsterification;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AcylChlorideFormation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AcylChlorideHydrolysis;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AlcoholDehydration;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AlcoholOxidation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AldehydeOxidation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AlkoxideProtonation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AmideHydrolysis;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.AminePhosgenation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.BoraneOxidation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.BorateEsterHydrolysis;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.BorateEsterification;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.CarboxylicAcidEsterification;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.CyanamideAddition;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.CyanideNucleophilicAddition;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.ElectrophilicChlorination;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.ElectrophilicChlorohydrination;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.ElectrophilicHydroboration;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.BoraneElectrophilicHydroboration;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.ElectrophilicHydrochlorination;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.ElectrophilicHydroiodination;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.ElectrophilicIodination;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.HalideAmineSubstitution;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.HalideAmmoniaSubstitution;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.HalideCyanideSubstitution;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.HalideHydroxideSubstitution;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.IsocyanateHydrolysis;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.NitrileHydrogenation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.NitrileHydrolysis;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.NitroHydrogenation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.SaturatedCarbonHydrogenation;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.SaturatedCarbonHydrolysis;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.WolffKishnerReduction;
-import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.ThionylChlorideSubstitution;
+import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.*;
 
 
 public class DestroyGenericReactions {
@@ -48,8 +15,8 @@ public class DestroyGenericReactions {
     public static final ElectrophilicChlorination ALKENE_CHLORINATION = new ElectrophilicChlorination(false);
     public static final ElectrophilicChlorohydrination ALKENE_CHLOROHYDRINATION = new ElectrophilicChlorohydrination(false);
     public static final SaturatedCarbonHydrolysis ALKENE_HYDROLYSIS = new SaturatedCarbonHydrolysis(false);
-    //public static final ElectrophilicHydroboration ALKENE_HYDROBORATION = new ElectrophilicHydroboration(false); // causes a game freeze whenever it occurs, my guess is excessive esterification, alkyne is the same
-    public static final BoraneElectrophilicHydroboration ALKENE_HYDROBORATION_WITH_BORANE = new BoraneElectrophilicHydroboration(false);
+    public static final AlkeneHydroboration ALKENE_HYDROBORATION = new AlkeneHydroboration(); // causes a game freeze whenever it occurs, my guess is excessive esterification, alkyne is the same
+    // public static final BoraneElectrophilicHydroboration ALKENE_HYDROBORATION_WITH_BORANE = new BoraneElectrophilicHydroboration(false);
     public static final ElectrophilicHydrochlorination ALKENE_HYDROCHLORINATION = new ElectrophilicHydrochlorination(false);
     public static final SaturatedCarbonHydrogenation ALKENE_HYDROGENATION = new SaturatedCarbonHydrogenation(false);
     public static final ElectrophilicHydroiodination ALKENE_HYDROIODINATION = new ElectrophilicHydroiodination(false);
