@@ -37,7 +37,7 @@ public class BorohydrideCarbonylReduction extends SingleGroupGenericReaction<Car
 
         return reactionBuilder()
             .addReactant(reactant.getMolecule(), 4)
-            .addReactant(DestroyMolecules.WATER, 4)
+            .addReactant(DestroyMolecules.WATER, 4) // workup included in reaction
             .addReactant(DestroyMolecules.BOROHYDRIDE)
             .addProduct(moleculeBuilder().structure(structure).build(), 4)
             .addProduct(DestroyMolecules.TETRAHYDROXYBORATE)
