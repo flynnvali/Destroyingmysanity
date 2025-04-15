@@ -1205,6 +1205,8 @@
     "destroy.reaction.metaxylene_transalkylation.description": "The {transalkylation, destroy:transalkylation} of [destroy:metaxylene] to produce {mixed xylenes, destroy:mixed_xylenes}.",
     "destroy.reaction.methane_uv_chlorination": "[destroy:methane] Chlorination",
     "destroy.reaction.methane_uv_chlorination.description": "Will react further to make [destroy:dichloromethane], [destroy:chloroform] and [destroy:carbon_tetrachloride].",
+    "destroy.reaction.methanol_borate_esterification": "[destroy:methanol] Borate Esterification",
+    "destroy.reaction.methanol_borate_esterification.description": "The reversible joining of [destroy:boric_acid] and [destroy:methanol]. Continually remove [destroy:water] to favor [destroy:trimethyl_borate].",
     "destroy.reaction.methanol_synthesis": "[destroy:methanol] Synthesis",
     "destroy.reaction.methanol_synthesis.description": "A method for the production of [destroy:methanol] from {syngas, destroy:syngas}. React {anaerobically, destroy:anaerobic} to prevent the formation of [destroy:carbon_dioxide].",
     "destroy.reaction.methyl_acetate_carbonylation": "[destroy:methyl_acetate] Carbonylation",
