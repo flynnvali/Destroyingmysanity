@@ -38,8 +38,8 @@ public class DestroyGenericReactions {
     public static final BoraneOxidation BORANE_OXIDATION = new BoraneOxidation();
     public static final BorateEsterHydrolysis BORATE_ESTER_HYDROLYSIS = new BorateEsterHydrolysis();
     //public static final BorateEsterification BORATE_ESTERIFICATION = new BorateEsterification(); // any solution containing boron compounds, even just boric acid or trace borate ions, becomes a disgusting mess of constantly esterifying generics
-    //public static final BorohydrideCarbonylReduction BOROHYDRIDE_CARBONYL_REDUCTION = new BorohydrideCarbonylReduction();
-    //public static final CarboxylicAcidReduction CARBOXYLIC_ACID_REDUCTION = new CarboxylicAcidReduction();
+    public static final BorohydrideCarbonylReduction BOROHYDRIDE_CARBONYL_REDUCTION = new BorohydrideCarbonylReduction();
+    public static final CarboxylicAcidReduction CARBOXYLIC_ACID_REDUCTION = new CarboxylicAcidReduction();
     public static final CyanamideAddition CYANAMIDE_ADDITION = new CyanamideAddition();
     public static final CarboxylicAcidEsterification CARBOXYLIC_ACID_ESTERIFICATION = new CarboxylicAcidEsterification();
     public static final CyanideNucleophilicAddition CYANIDE_NUCLEOPHILIC_ADDITION = new CyanideNucleophilicAddition();
