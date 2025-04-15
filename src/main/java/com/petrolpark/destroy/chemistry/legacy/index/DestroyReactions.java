@@ -1113,6 +1113,15 @@ public class DestroyReactions {
         .addProduct(DestroyMolecules.CARBON_TETRACHLORIDE)
         .addProduct(DestroyMolecules.HYDROCHLORIC_ACID)
         .activationEnergy(30f)
+        .build(),
+
+    METHANOL_BORATE_ESTERIFICATION = builder()
+        .id("methanol_borate_esterification")
+        .addReactant(DestroyMolecules.METHANOL, 3)
+        .addReactant(DestroyMolecules.BORIC_ACID)
+        .addProduct(DestroyMolecules.TRIMETHYL_BORATE)
+        .addProduct(DestroyMolecules.WATER, 3)
+        .displayAsReversible()
         .build();
 
     // Acids
