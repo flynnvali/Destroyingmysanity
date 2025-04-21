@@ -274,14 +274,23 @@ public class LegacyMolecularStructure implements Cloneable {
      * @param bondType
      * @return A new Formula which consists of the joined structure of both Formulae
      */
+
+
+
+
+
+
+
     public static LegacyMolecularStructure joinFormulae(LegacyMolecularStructure formula1, LegacyMolecularStructure formula2, BondType bondType) {
+        int carbonCount1 = (int)formula1.structure.keySet().stream().filter(atom -> atom.getElement() == LegacyElement.CARBON).count();
+        int carbonCount2 = (int)formula2.structure.keySet().stream().filter(atom -> atom.getElement() == LegacyElement.CARBON).count();
         LegacyMolecularStructure formula;
         if (formula2.isCyclic()) {
             if (formula1.isCyclic()) throw new FormulaModificationException(formula1, "Cannot join two cyclic structures.");
             formula1.startingAtom = formula1.currentAtom;
             formula2.addGroup(formula1, false, bondType);
             formula = formula2;
-        } else {
+        } else if(carbonCount1 + carbonCount2 > 6) throw new FormulaModificationException(formula1, "Carbon count via joining molecules limited at 6"); else { // manually capped carbons from conjoining reactions at 6 to prevent excessive esterification
             formula2.startingAtom = formula2.currentAtom;
             formula1.addGroup(formula2, true, bondType);
             formula = formula1;
