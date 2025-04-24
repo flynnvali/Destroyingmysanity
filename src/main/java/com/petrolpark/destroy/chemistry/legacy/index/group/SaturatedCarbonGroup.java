@@ -7,13 +7,11 @@ public abstract class SaturatedCarbonGroup extends LegacyFunctionalGroup<Saturat
 
     public final LegacyAtom highDegreeCarbon;
     public final LegacyAtom lowDegreeCarbon;
-    public final boolean noHydrogens;
 
-    public SaturatedCarbonGroup(LegacyAtom highDegreeCarbon, LegacyAtom lowDegreeCarbon, Boolean noHydrogens) {
+    public SaturatedCarbonGroup(LegacyAtom highDegreeCarbon, LegacyAtom lowDegreeCarbon) {
         super();
         this.highDegreeCarbon = highDegreeCarbon;
         this.lowDegreeCarbon = lowDegreeCarbon;
-        this.noHydrogens = noHydrogens;
     };
 
 };

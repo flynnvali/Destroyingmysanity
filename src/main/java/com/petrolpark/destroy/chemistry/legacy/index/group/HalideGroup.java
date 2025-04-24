@@ -17,7 +17,6 @@ public class HalideGroup extends LegacyFunctionalGroup<HalideGroup> {
         this.degree = degree;
     };
 
-
     @Override
     public LegacyFunctionalGroupType<HalideGroup> getType() {
         return DestroyGroupTypes.HALIDE;

@@ -799,24 +799,22 @@ public class LegacyReaction {
 
             // Electrochem calculations
 
-            // commented out all of it because it was just causing problems and doing nothing else
-
-            // int chargeDecrease = 0;
-            // for (Entry<LegacySpecies, Integer> reactant : reaction.reactants.entrySet()) {
-                // chargeDecrease += reactant.getKey().getCharge() * reactant.getValue();
-            // };
-            // for (Entry<LegacySpecies, Integer> product : reaction.products.entrySet()) {
-                // chargeDecrease -= product.getKey().getCharge() * product.getValue();
-            // };
-            // if (chargeDecrease != 0 && chargeDecrease < 0 != declaredAsReverse) { // Reactions which were generated with `reverseReaction(r -> {})` should be oxidations
-                // throw e("Reactions must conserve charge or be reduction half-Reactions.");
-            // } else if (chargeDecrease == 0) {
-                // if (hasForcedHalfCellPotential) throw e("A half-cell potential is specified but electrons are not transferred.");
-            // } else {
-                // if (!hasForcedHalfCellPotential) throw e("Half-Reactions must specify a half-cell potential.");
-                // if (reaction.reverseReaction == null) throw e("Half-Reactions must be reversible.");
-                // reaction.electrons = chargeDecrease;
-            // };
+            int chargeDecrease = 0;
+            for (Entry<LegacySpecies, Integer> reactant : reaction.reactants.entrySet()) {
+                chargeDecrease += reactant.getKey().getCharge() * reactant.getValue();
+            };
+            for (Entry<LegacySpecies, Integer> product : reaction.products.entrySet()) {
+                chargeDecrease -= product.getKey().getCharge() * product.getValue();
+            };
+            if (chargeDecrease != 0 && chargeDecrease < 0 != declaredAsReverse) { // Reactions which were generated with `reverseReaction(r -> {})` should be oxidations
+                throw e("Reactions must conserve charge or be reduction half-Reactions.");
+            } else if (chargeDecrease == 0) {
+                if (hasForcedHalfCellPotential) throw e("A half-cell potential is specified but electrons are not transferred.");
+            } else {
+                if (!hasForcedHalfCellPotential) throw e("Half-Reactions must specify a half-cell potential.");
+                if (reaction.reverseReaction == null) throw e("Half-Reactions must be reversible.");
+                reaction.electrons = chargeDecrease;
+            };
 
             // Kinetics calculations
 

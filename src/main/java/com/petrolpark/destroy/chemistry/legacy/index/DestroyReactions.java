@@ -61,13 +61,6 @@ public class DestroyReactions {
         .withResult(0f, DestroyAdvancementTrigger.AIBN::asReactionResult)
         .build(),
 
-    //AMMONIUM_DEPROTONATION = builder()
-        //.id("ammonium_deprotonation")
-        //.addReactant(DestroyMolecules.AMMONIUM)
-        //.addReactant(DestroyMolecules.AZANIDE)
-        //.addProduct(DestroyMolecules.AMMONIA, 2)
-        //.build(),
-
     ANDRUSSOW_PROCESS = builder()
         .id("andrussow_process")
         .addReactant(DestroyMolecules.METHANE, 2, 1)
@@ -97,14 +90,6 @@ public class DestroyReactions {
         .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/palladium"), 1f)
         .addProduct(DestroyMolecules.ETHYLANTHRAHYDROQUINONE)
         .build(),
-
-    //AZANIDE_HYDROLYIS = builder()
-        //.id("azanide_hydration")
-        //.addReactant(DestroyMolecules.AZANIDE)
-        //.addReactant(DestroyMolecules.WATER)
-        //.addProduct(DestroyMolecules.AMMONIA)
-        //.addProduct(DestroyMolecules.HYDROXIDE)
-        //.build(),
 
     BABY_BLUE_PRECIPITATION = builder()
         .id("baby_blue_precipitation")
@@ -380,17 +365,6 @@ public class DestroyReactions {
         .addProduct(DestroyMolecules.DICHROMATE)
         .addProduct(DestroyMolecules.WATER)
         .reversible()
-        .build(),
-
-    CARBON_DIOXIDE_HYDROGENATION = builder()
-        .id("carbon_dioxide_hydrogenation")
-        .addReactant(DestroyMolecules.CARBON_DIOXIDE)
-        .addReactant(DestroyMolecules.HYDROGEN)
-        .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
-        .addProduct(DestroyMolecules.FORMIC_ACID)
-            .reverseReaction(reaction -> reaction
-                    .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
-            )
         .build(),
 
     COPPER_DISSOLUTION = builder() //TODO replace with redox
@@ -715,23 +689,6 @@ public class DestroyReactions {
         .addProduct(DestroyMolecules.METHANOL)
         .build(), //TODO ensure high pressure is used
 
-    METHANOL_HYDROCHLORINATIOM = builder()
-        .id("methanol_hydrochlorination")
-        .addReactant(DestroyMolecules.METHANOL)
-        .addReactant(DestroyMolecules.HYDROCHLORIC_ACID)
-        .addSimpleItemCatalyst(DestroyItems.ZEOLITE::get, 1f)
-        .addProduct(DestroyMolecules.CHLOROMETHANE)
-        .addProduct(DestroyMolecules.WATER)
-        .build(),
-
-    METHANOL_HYDROIODATION = builder()
-        .id("methanol_hydroiodation")
-        .addReactant(DestroyMolecules.METHANOL)
-        .addReactant(DestroyMolecules.HYDROGEN_IODIDE) // no sources specified a catalyst of any kind, but that feels wrong so please correct if you can
-        .addProduct(DestroyMolecules.IODOMETHANE)
-        .addProduct(DestroyMolecules.WATER)
-        .build(),
-
     METHYL_ACETATE_CARBONYLATION = builder()
         .id("methyl_acetate_carbonylation")
         .addReactant(DestroyMolecules.METHANOL)
@@ -763,16 +720,6 @@ public class DestroyReactions {
         .addReactant(DestroyMolecules.NITRATE, 2, 0)
         .addReactant(DestroyMolecules.HYDRAZINE, 3)
         .withResult(3f, PrecipitateReactionResult.of(DestroyItems.NICKEL_HYDRAZINE_NITRATE::asStack)) //TODO figure out actual molar ratios
-        .build(),
-
-    NICKEL_BORIDE_SYNTHESIS = builder()
-        .id("nickel_boride_synthesis")
-        .addReactant(DestroyMolecules.NICKEL_ION, 4)
-        .addReactant(DestroyMolecules.BOROHYDRIDE, 8)
-        .addReactant(DestroyMolecules.WATER, 18)
-        .addProduct(DestroyMolecules.HYDROGEN, 25 )
-        .addProduct(DestroyMolecules.BORIC_ACID, 6)
-        .withResult(2f, PrecipitateReactionResult.of(DestroyItems.NICKEL_BORIDE::asStack))
         .build(),
 
     NICKEL_DISSOLUTION = builder() //TODO replace with redox
@@ -902,16 +849,6 @@ public class DestroyReactions {
         ).preexponentialFactor(10f)
         .activationEnergy(10f)
         .build(),
-
-    SABATIER_PROCESS = builder()
-         .id("sabatier_process")
-         .addReactant(DestroyMolecules.HYDROGEN, 4)
-         .addReactant(DestroyMolecules.CARBON_DIOXIDE)
-         .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/nickel"), 1f)
-         .addProduct(DestroyMolecules.METHANE)
-         .addProduct(DestroyMolecules.WATER, 2)
-         .activationEnergy(50f)
-         .build(),
 
     SODIUM_AMALGAMIZATION = builder()
         .id("sodium_amalgamization")
@@ -1070,15 +1007,6 @@ public class DestroyReactions {
             .addProduct(DestroyMolecules.CARBON_DIOXIDE)
             .build(),
 
-    TOLUENE_CHLORINATION = builder()
-        .id("toluene_chlorination")
-        .addReactant(DestroyMolecules.TOLUENE)
-        .addReactant(DestroyMolecules.CHLORINE)
-        .addProduct(DestroyMolecules.BENZYL_CHLORIDE)
-        .addProduct(DestroyMolecules.HYDROCHLORIC_ACID)
-        .requireUV()
-        .build(),
-
     TOLUENE_NITRATION = builder()
         .id("toluene_nitration")
         .addReactant(DestroyMolecules.TOLUENE)
@@ -1200,7 +1128,6 @@ public class DestroyReactions {
     static {
         builder().acid(DestroyMolecules.ACETIC_ACID, DestroyMolecules.ACETATE, 4.76f);
         builder().acid(DestroyMolecules.AMMONIUM, DestroyMolecules.AMMONIA, 9.25f);
-        builder().acid(DestroyMolecules.FORMIC_ACID, DestroyMolecules.FORMATE, 3.75f);
         builder().acid(DestroyMolecules.HYDROCHLORIC_ACID, DestroyMolecules.CHLORIDE, -6.3f);
         builder().acid(DestroyMolecules.HYDROFLUORIC_ACID, DestroyMolecules.FLUORIDE, 3.17f);
         builder().acid(DestroyMolecules.HYDROGEN_CYANIDE, DestroyMolecules.CYANIDE, 9.2f);

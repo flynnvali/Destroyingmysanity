@@ -13,19 +13,8 @@ import net.minecraft.ChatFormatting;
 
 public final class DestroyMolecules {
 
-    public static final LegacySpecies
-
-
-    ACETALDEHYDE = builder()
-        .id("acetaldehyde")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:CC(=O)"))
-        .boilingPoint(20.2f)
-        .density(784f)
-        .molarHeatCapacity(117.3f)
-        .tag(Tags.ACUTELY_TOXIC)
-        .tag(Tags.CARCINOGEN)
-        .build(),
-
+    public static final LegacySpecies 
+    
     ACETAMIDE = builder()
         .id("acetamide")
         .structure(LegacyMolecularStructure.deserialize("destroy:linear:CC(=O)N"))
@@ -164,12 +153,6 @@ public final class DestroyMolecules {
         .tag(Tags.SMOG)
         .build(),
 
-    //AZANIDE = builder()
-            //.id("azanide")
-            //.structure(LegacyMolecularStructure.atom(LegacyElement.NITROGEN, -1).addAtom(LegacyElement.HYDROGEN).addAtom(LegacyElement.HYDROGEN))
-            //.tag(Tags.ACUTELY_TOXIC)
-            //.build(),
-
     BENZENE = builder()
         .id("benzene")
         .structure(LegacyMolecularStructure.deserialize("destroy:benzene:,,,,"))
@@ -297,17 +280,6 @@ public final class DestroyMolecules {
         .tag(Tags.OZONE_DEPLETER)
         .tag(Tags.CARCINOGEN)
         .build(),
-
-    CHLOROETHANOL = builder()
-        .id("chloroethanol")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:ClCCO"))
-        .boilingPoint(127f)
-        .density(1201f)
-        .molarHeatCapacity(109f) // couldn't find a source, copied ethanol's
-        .tag(Tags.ACUTELY_TOXIC)
-        .tag(Tags.GREENHOUSE)
-        .build(),
-
 
     CHLOROETHENE = builder()
         .id("chloroethene")
@@ -548,49 +520,14 @@ public final class DestroyMolecules {
         .tag(Tags.SMOG)
         .build(),
 
-    ETHYNIDE = builder()
-        .id("ethynide")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:C#C^-1"))
-        .build(),
-
     ETHOXIDE = builder()
         .id("ethoxide")
         .structure(LegacyMolecularStructure.deserialize("destroy:linear:CCO^-1"))
         .build(),
     
-    FORMALDEHYDE = builder()
-        .id("formaldehyde")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:C(=O)"))
-        .boilingPoint(-19f)
-        .density(815f)
-        .molarHeatCapacity(35.4f) // this feels wrong but its the only thing I could find
-        .build(),
-
-
-    FORMIC_ACID = builder()
-        .id("formic_acid")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:C(=O)OH"))
-        .boilingPoint(100.8f)
-        .density(1220f)
-        .molarHeatCapacity(82.8f)
-        .build(),
-
-
-    FORMATE = builder()
-        .id("formate")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:C~(~O^-0.5)O^-0.5"))
-        .build(),
-
     FLUORIDE = builder()
         .id("fluoride")
         .structure(LegacyMolecularStructure.atom(LegacyElement.FLUORINE, -1))
-        .build(),
-
-    GENERIC_ACETYLIDE = builder()
-        .id("generic_acetylide")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:RC#C^-1"))
-        .hypothetical()
-        .translationKey("acetylide")
         .build(),
 
     GENERIC_ACID_ANHYDRIDE = builder()
@@ -627,7 +564,6 @@ public final class DestroyMolecules {
         .hypothetical()
         .translationKey("alkoxide")
         .build(),
-
 
     GENERIC_ALKYNE = builder()
         .id("generic_alkyne")
@@ -690,13 +626,6 @@ public final class DestroyMolecules {
         .structure(LegacyMolecularStructure.deserialize("destroy:linear:RC(=O)OR"))
         .hypothetical()
         .translationKey("ester")
-        .build(),
-
-    GENERIC_GEMINAL_DIHALIDE = builder()
-        .id("generic_geminal_dihalide")
-        .structure(LegacyMolecularStructure.deserialize("destroy:linear:RC(Cl)(Cl)R"))
-        .hypothetical()
-        .translationKey("geminal_dihalide")
         .build(),
 
     GENERIC_ISOCYANATE = builder()
