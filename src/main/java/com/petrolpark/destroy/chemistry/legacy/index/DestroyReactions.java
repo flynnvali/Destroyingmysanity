@@ -382,6 +382,17 @@ public class DestroyReactions {
         .reversible()
         .build(),
 
+    CARBON_DIOXIDE_HYDROGENATION = builder()
+        .id("carbon_dioxide_hydrogenation")
+        .addReactant(DestroyMolecules.CARBON_DIOXIDE)
+        .addReactant(DestroyMolecules.HYDROGEN)
+        .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
+        .addProduct(DestroyMolecules.FORMIC_ACID)
+            .reverseReaction(reaction -> reaction
+                    .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
+            )
+        .build(),
+
     COPPER_DISSOLUTION = builder() //TODO replace with redox
         .id("copper_dissolution")
         .addReactant(DestroyMolecules.PROTON, 2, 1)
@@ -1180,6 +1191,7 @@ public class DestroyReactions {
     static {
         builder().acid(DestroyMolecules.ACETIC_ACID, DestroyMolecules.ACETATE, 4.76f);
         builder().acid(DestroyMolecules.AMMONIUM, DestroyMolecules.AMMONIA, 9.25f);
+        builder().acid(DestroyMolecules.FORMIC_ACID, DestroyMolecules.FORMATE, 3.75f);
         builder().acid(DestroyMolecules.HYDROCHLORIC_ACID, DestroyMolecules.CHLORIDE, -6.3f);
         builder().acid(DestroyMolecules.HYDROFLUORIC_ACID, DestroyMolecules.FLUORIDE, 3.17f);
         builder().acid(DestroyMolecules.HYDROGEN_CYANIDE, DestroyMolecules.CYANIDE, 9.2f);

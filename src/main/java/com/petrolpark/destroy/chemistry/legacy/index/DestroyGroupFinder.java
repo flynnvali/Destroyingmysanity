@@ -82,10 +82,15 @@ public class DestroyGroupFinder extends GroupFinder {
                             };
                             }
                     };
-                } else { // Alcohols, alkoxides, halides, nitriles, amines, isocyanates, nitros, boranes, borate esters
+                } else { // Alcohols, alkoxides, geminal dihalides, halides, nitriles, amines, isocyanates, nitros, boranes, borate esters
                     for (LegacyAtom halogen : halogens) {
                         if (chlorines.size() < 3 && fluorines.size() == 0) { // Targeting the chlorines on Carbon Tetrachloride, Chloroform and the various CFCs to make them nonreactive
-                            groups.add(new HalideGroup(carbon, halogen, carbons.size()));
+                            if (halogens.size() == 1) {
+                                groups.add(new HalideGroup(carbon, halogen, carbons.size()));
+                            } else {
+                                groups.add(new GeminalDihalideGroup(carbon, halogens.get(0), halogens.get(1), carbons.size())); // Geminal dihalides
+                                groups.add(new HalideGroup(carbon, halogen, carbons.size()));
+                            }
                         }
                     };
                     for (LegacyAtom oxygen : singleBondOxygens) { // Alcohols

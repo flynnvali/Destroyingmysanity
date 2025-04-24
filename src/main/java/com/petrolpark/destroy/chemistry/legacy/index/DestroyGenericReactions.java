@@ -56,6 +56,8 @@ public class DestroyGenericReactions {
     public static final NitroHydrogenation NITRO_HYDROGENATION = new NitroHydrogenation();
     public static final ThionylChlorideSubstitution THIONYL_CHLORIDE_SUBSTITUTION = new ThionylChlorideSubstitution();
     public static final WolffKishnerReduction WOLFF_KISHNER_REDUCTION = new WolffKishnerReduction();
+    public static final GeminalDihalideHydroxideSubstitution GEMINAL_DIHALIDE_HYDROXIDE_SUBSTITUTION = new GeminalDihalideHydroxideSubstitution();
+    public static final LeukartReaction LEUKART_REACTION = new LeukartReaction();
 
     public static void register() {};
 };

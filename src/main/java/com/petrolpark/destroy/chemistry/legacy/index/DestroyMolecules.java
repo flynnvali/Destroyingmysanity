@@ -575,6 +575,12 @@ public final class DestroyMolecules {
         .molarHeatCapacity(82.8f)
         .build(),
 
+
+    FORMATE = builder()
+        .id("formate")
+        .structure(LegacyMolecularStructure.deserialize("destroy:linear:C~(~O^-0.5)O^-0.5"))
+        .build(),
+
     FLUORIDE = builder()
         .id("fluoride")
         .structure(LegacyMolecularStructure.atom(LegacyElement.FLUORINE, -1))
@@ -684,6 +690,13 @@ public final class DestroyMolecules {
         .structure(LegacyMolecularStructure.deserialize("destroy:linear:RC(=O)OR"))
         .hypothetical()
         .translationKey("ester")
+        .build(),
+
+    GENERIC_GEMINAL_DIHALIDE = builder()
+        .id("generic_geminal_dihalide")
+        .structure(LegacyMolecularStructure.deserialize("destroy:linear:RC(Cl)(Cl)R"))
+        .hypothetical()
+        .translationKey("geminal_dihalide")
         .build(),
 
     GENERIC_ISOCYANATE = builder()
