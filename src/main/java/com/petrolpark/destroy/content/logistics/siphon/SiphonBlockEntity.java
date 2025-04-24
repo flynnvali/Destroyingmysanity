@@ -2,7 +2,7 @@ package com.petrolpark.destroy.content.logistics.siphon;
 
 import java.util.List;
 
-import com.ibm.icu.text.DecimalFormat;
+import java.text.DecimalFormat;
 import com.petrolpark.destroy.DestroyAdvancementTrigger;
 import com.petrolpark.destroy.client.DestroyLang;
 import com.petrolpark.destroy.config.DestroyAllConfigs;
@@ -40,13 +40,18 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggleInformation {
 
+    private static final DecimalFormat df = new DecimalFormat();
+    static {
+        df.setMinimumFractionDigits(1);
+        df.setMaximumFractionDigits(1);
+    };
+
     public SiphonFluidTankBehaviour tank;
     public int leftToDrain = 0;
 
     public ScrollValueBehaviour settings;
 
     public DestroyAdvancementBehaviour advancementBehaviour;
-    private boolean giveAdvancementWhenEmptied = false;
 
     public SiphonBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -58,7 +63,7 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
         behaviours.add(tank);
 
         settings = new SiphonScrollValueBehaviour()
-            .between(1, 10000);
+                .between(1, 10000);
         settings.setValue(1000);
         behaviours.add(settings);
 
@@ -71,21 +76,19 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
     protected void read(CompoundTag tag, boolean clientPacket) {
         super.read(tag, clientPacket);
         leftToDrain = tag.getInt("LeftToDrain");
-        if (tag.contains("GiveAdvancementWhenEmptied", Tag.TAG_BYTE)) giveAdvancementWhenEmptied = tag.getBoolean("GiveAdvancementWhenEmptied"); 
     };
 
     @Override
     protected void write(CompoundTag tag, boolean clientPacket) {
         super.write(tag, clientPacket);
         tag.putInt("LeftToDrain", leftToDrain);
-        if (advancementBehaviour.getPlayer() != null) tag.putBoolean("GiveAdvanementWhenEmptied", giveAdvancementWhenEmptied);
     };
 
     @Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == ForgeCapabilities.FLUID_HANDLER) return tank.getCapability().cast();
-		return super.getCapability(cap, side);
-	}
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (cap == ForgeCapabilities.FLUID_HANDLER) return tank.getCapability().cast();
+        return super.getCapability(cap, side);
+    }
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
@@ -111,8 +114,10 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
             public FluidStack drain(int maxDrain, FluidAction action) {
                 maxDrain = Math.min(maxDrain, leftToDrain);
                 FluidStack drained = super.drain(maxDrain, action);
-                if (action.execute()) leftToDrain -= drained.getAmount();
-                checkAdvancement();
+                if (action.execute()) {
+                    leftToDrain -= drained.getAmount();
+                    if(!drained.isEmpty()) checkAdvancement();
+                }
                 return drained;
             };
 
@@ -122,13 +127,15 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
                 if (toDrain.isEmpty()) return FluidStack.EMPTY;
                 toDrain.setAmount(Math.min(resource.getAmount(), leftToDrain));
                 FluidStack drained = super.drain(toDrain, action);
-                if (action.execute()) leftToDrain -= drained.getAmount();
-                checkAdvancement();
+                if (action.execute()) {
+                    leftToDrain -= drained.getAmount();
+                    if(!drained.isEmpty()) checkAdvancement();
+                }
                 return drained;
             };
 
             private void checkAdvancement() {
-                if (giveAdvancementWhenEmptied && leftToDrain == 0) {
+                if (leftToDrain == 0) {
                     advancementBehaviour.awardDestroyAdvancement(DestroyAdvancementTrigger.SIPHON);
                 };
             };
@@ -138,12 +145,6 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
 
     public class SiphonScrollValueBehaviour extends ScrollValueBehaviour {
 
-        private static DecimalFormat df = new DecimalFormat();
-        static {
-            df.setMinimumFractionDigits(1);
-            df.setMaximumFractionDigits(1);
-        };
-
         public SiphonScrollValueBehaviour() {
             super(Component.translatable("block.destroy.siphon.drain_amount"), SiphonBlockEntity.this, new SiphonSlot());
         };
@@ -151,8 +152,8 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
         @Override
         public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
             return new ValueSettingsBoard(label, 100, 10,
-			Lang.translatedOptions("generic.unit", "millibuckets", "buckets"),
-			new ValueSettingsFormatter(this::formatSettings));
+                    Lang.translatedOptions("generic.unit", "millibuckets", "buckets"),
+                    new ValueSettingsFormatter(this::formatSettings));
         };
 
         @Override
@@ -188,9 +189,9 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
 
             @Override
             protected Vec3 getSouthLocation() {
-                return VecHelper.voxelSpace(8d, 8d, 14.5d);  
+                return VecHelper.voxelSpace(8d, 8d, 14.5d);
             };
-    
+
             @Override
             public Vec3 getLocalOffset(BlockState state) {
                 if (getSide().getAxis() == Direction.Axis.Y) {
@@ -198,9 +199,9 @@ public class SiphonBlockEntity extends SmartBlockEntity implements IHaveLabGoggl
                 };
                 return super.getLocalOffset(state);
             };
-            
+
         };
 
     };
-    
+
 };
