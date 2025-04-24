@@ -290,7 +290,7 @@ public class LegacyMolecularStructure implements Cloneable {
             formula1.startingAtom = formula1.currentAtom;
             formula2.addGroup(formula1, false, bondType);
             formula = formula2;
-        } else if(carbonCount1 + carbonCount2 > 6) throw new FormulaModificationException(formula1, "Carbon count via joining molecules limited at 6"); else { // manually capped carbons from conjoining reactions at 6 to prevent excessive esterification
+        } else if(carbonCount1 + carbonCount2 > 10) throw new FormulaModificationException(formula1, "Carbon count via joining molecules limited at 10"); else { // manually capped carbons from conjoining reactions at 10 to prevent excessive esterification
             formula2.startingAtom = formula2.currentAtom;
             formula1.addGroup(formula2, true, bondType);
             formula = formula1;
