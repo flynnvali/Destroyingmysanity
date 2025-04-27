@@ -29,7 +29,7 @@ public class AlkyneChlorohydrination extends SingleGroupGenericReaction<Saturate
                 .shallowCopyStructure()
                 .moveTo(group.highDegreeCarbon)
                 .replaceBondTo(group.lowDegreeCarbon, BondType.SINGLE)
-                .addCarbonyl()
+                .addAtom(LegacyElement.OXYGEN, BondType.DOUBLE)
                 .moveTo(group.lowDegreeCarbon)
                 .addGroup(LegacyMolecularStructure.atom(LegacyElement.CHLORINE))
                 .addGroup(LegacyMolecularStructure.atom(LegacyElement.CHLORINE))
