@@ -177,7 +177,7 @@ public class DestroyReactions {
         .addReactant(DestroyMolecules.TRIMETHYL_BORATE)
         .addSimpleItemReactant(DestroyItems.SODIUM_HYDRIDE::get, 2.4f)
         .addProduct(DestroyMolecules.BOROHYDRIDE)
-        .addProduct(DestroyMolecules.ETHOXIDE, 3)
+        .addProduct(DestroyMolecules.METHOXIDE, 3)
         .addProduct(DestroyMolecules.SODIUM_ION, 4)
         .build(),
         

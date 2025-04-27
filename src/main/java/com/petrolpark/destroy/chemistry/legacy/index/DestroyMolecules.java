@@ -964,6 +964,11 @@ public final class DestroyMolecules {
         .tag(Tags.SOLVENT)
         .build(),
 
+    METHOXIDE = builder()
+        .id("methoxide")
+        .structure(LegacyMolecularStructure.deserialize("destroy:linear:CO^-1"))
+        .build(),
+
     METHYLAMINE = builder()
         .id("methylamine")
         .structure(LegacyMolecularStructure.deserialize("destroy:linear:CN"))
