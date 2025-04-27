@@ -1,3 +1,4 @@
+
 modLoader="javafml"
 loaderVersion="[40,)"
 issueTrackerURL="https://github.com/petrolpark/Destroy/issues"
@@ -15,60 +16,57 @@ authors="petrolpark"
 description='''A destructive chemistry-based add-on to Create.'''
 
 [[dependencies.destroy]]
-    modId="forge"
-    mandatory=true
-    versionRange="[43,)"
-    ordering="NONE"
-    side="BOTH"
+modId="forge"
+mandatory=true
+versionRange="[43,)"
+ordering="NONE"
+side="BOTH"
 
 [[dependencies.destroy]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.20.1]"
-    ordering="NONE"
-    side="BOTH"
-    
-[[dependencies.destroy]]
-	modId="create"
-	mandatory=true
-	versionRange="[0.5.1.h,)"
-	ordering="AFTER"
-	side="BOTH"
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="NONE"
+side="BOTH"
 
 [[dependencies.destroy]]
-	modId="petrolpark"
-	mandatory=true
-	versionRange="[1.4.2,1.5.0)"
-	ordering="AFTER"
-	side="BOTH"
+modId="create"
+mandatory=true
+versionRange="[0.5.1.h,)"
+ordering="AFTER"
+side="BOTH"
 
 [[dependencies.destroy]]
-	modId="tfmg"
-	mandatory=false
-    versionRange="[0.9.0,)"
-	ordering="AFTER"
-	side="BOTH"
+modId="petrolpark"
+mandatory=true
+versionRange="[1.4.2,1.5.0)"
+ordering="AFTER"
+side="BOTH"
 
 [[dependencies.destroy]]
-    modId="createbigcannons"
-    mandatory=false
-    versionRange="[5.5.0,)"
-    ordering="AFTER"
-    side="BOTH"
+modId="tfmg"
+mandatory=false
+versionRange="[0.9.0,)"
+ordering="AFTER"
+side="BOTH"
 
 [[dependencies.destroy]]
-    modId="curios"
-    mandatory=false
-    versionRange="[5.9.1,)"
-    ordering="AFTER"
-    side="BOTH"
+modId="createbigcannons"
+mandatory=false
+versionRange="[5.5.0,)"
+ordering="AFTER"
+side="BOTH"
 
 [[dependencies.destroy]]
-    modId="jei"
-    mandatory=false
-    versionRange="[15.12.3.55,)"
-    ordering="AFTER"
-    side="CLIENT"
+modId="curios"
+mandatory=false
+versionRange="[5.9.1,)"
+ordering="AFTER"
+side="BOTH"
 
-
-
+[[dependencies.destroy]]
+modId="jei"
+mandatory=false
+versionRange="[15.12.3.55,)"
+ordering="AFTER"
+side="CLIENT"

@@ -30,7 +30,6 @@ public class DestroyGenericReactions {
     public static final AlkoxideProtonation ALKOXIDE_PROTONATION = new AlkoxideProtonation();
     public static final ElectrophilicChlorination ALKYNE_CHLORINATION = new ElectrophilicChlorination(true);
     public static final ElectrophilicChlorohydrination ALKYNE_CHLOROHYDRINATION = new ElectrophilicChlorohydrination(true);
-    public static final SaturatedCarbonHydrolysis ALKYNE_HYDROLYSIS = new SaturatedCarbonHydrolysis(true);
    //public static final ElectrophilicHydroboration ALKYNE_HYDROBORATION = new ElectrophilicHydroboration(true);
     public static final BoraneElectrophilicHydroboration ALKYNE_HYDROBORATION_WITH_BORANE = new BoraneElectrophilicHydroboration(true);
     public static final ElectrophilicHydrochlorination ALKYNE_HYDROCHLORINATION = new ElectrophilicHydrochlorination(true);
