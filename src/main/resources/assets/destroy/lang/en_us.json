@@ -1192,6 +1192,8 @@
     "destroy.reaction.ethylbenzene_transalkylation.description": "The {transalkylation, destroy:transalkylation} of [destroy:ethylbenzene] to produce {mixed xylenes, destroy:mixed_xylenes}.",
     "destroy.reaction.fluorite_dissolution": "Fluorite Dissolution",
     "destroy.reaction.fluorite_dissolution.description": "The {dissolution, destroy:solution} of Fluorite in {acid, destroy:acid}.",
+    "destroy.reaction.formic_acid_decomposition": "Formic Acid Decomposition",
+    "destroy.reaction.formic_acid_decomposition.description": "The decomposition of [destroy:formic_acid] in the prescence of concentrated [destroy:sulfuric_acid].",
     "destroy.reaction.frank_caro_process": "Frank-Caro Process",
     "destroy.reaction.frank_caro_process.description": "The {sequestration, destroy:sequestration} of [destroy:nitrogen] by [destroy:calcium] Carbide.",
     "destroy.reaction.gold_dissolution": "Gold Dissolution",

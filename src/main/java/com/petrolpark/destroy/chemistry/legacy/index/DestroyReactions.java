@@ -482,6 +482,16 @@ public class DestroyReactions {
         .addProduct(DestroyMolecules.HYDROFLUORIC_ACID, 2)
         .build(),
 
+    FORMIC_ACID_DECOMPOSITION = builder()
+        .id("formic_acid_decomposition")
+        .addReactant(DestroyMolecules.FORMIC_ACID)
+        .addProduct(DestroyMolecules.CARBON_MONOXIDE)
+        .addCatalyst(DestroyMolecules.PROTON, 1)
+        .addCatalyst(DestroyMolecules.HYDROGENSULFATE, 1)
+        .addProduct(DestroyMolecules.WATER)
+        .activationEnergy(50f)
+        .build(),
+
     FRANK_CARO_PROCESS = builder()
         .id("frank_caro_process")
         .addSimpleItemReactant(DestroyItems.CALCIUM_CARBIDE, 2f)
