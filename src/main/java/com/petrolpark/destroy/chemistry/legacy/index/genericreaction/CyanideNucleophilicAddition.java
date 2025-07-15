@@ -21,7 +21,7 @@ public class CyanideNucleophilicAddition extends SingleGroupGenericReaction<Carb
 
     @Override
     public boolean isPossibleIn(ReadOnlyMixture mixture) {
-        return mixture.getConcentrationOf(DestroyMolecules.CYANIDE) > 0f && mixture.getConcentrationOf(DestroyMolecules.PROTON) > 0f;
+        return mixture.getConcentrationOf(DestroyMolecules.CYANIDE) > 0f;
     };
 
     @Override
