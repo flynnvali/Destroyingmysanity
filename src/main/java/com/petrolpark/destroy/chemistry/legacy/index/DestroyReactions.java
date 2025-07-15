@@ -777,12 +777,12 @@ public class DestroyReactions {
 
     NICKEL_BORIDE_SYNTHESIS = builder()
         .id("nickel_boride_synthesis")
-        .addReactant(DestroyMolecules.NICKEL_ION, 4)
-        .addReactant(DestroyMolecules.BOROHYDRIDE, 8)
-        .addReactant(DestroyMolecules.WATER, 18)
-        .addProduct(DestroyMolecules.HYDROGEN, 25 )
-        .addProduct(DestroyMolecules.BORIC_ACID, 6)
-        .withResult(2f, PrecipitateReactionResult.of(DestroyItems.NICKEL_BORIDE::asStack))
+        .addReactant(DestroyMolecules.NICKEL_ION, 8)
+        .addReactant(DestroyMolecules.BOROHYDRIDE, 16)
+        .addReactant(DestroyMolecules.WATER, 36)
+        .addProduct(DestroyMolecules.HYDROGEN, 50 )
+        .addProduct(DestroyMolecules.BORIC_ACID, 12)
+        .withResult(1f, PrecipitateReactionResult.of(DestroyItems.NICKEL_BORIDE::asStack))
         .build(),
 
     NICKEL_DISSOLUTION = builder() //TODO replace with redox
