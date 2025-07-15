@@ -308,6 +308,9 @@ public class DestroyItems {
         .properties(p -> p
             .food(DestroyFoods.BABY_BLUE_POWDER)
         ).tag(Tags.Items.DUSTS)
+        .register(),
+    NICKEL_BORIDE = REGISTRATE.item("nickel_boride", Item::new)
+        .tag(Tags.Items.DUSTS)
         .register();
 
     public static final ItemEntry<CarboxylatingItem> QUICKLIME = REGISTRATE.item("quicklime", p -> new CarboxylatingItem(p, CHALK_DUST::asStack, () -> DestroyAllConfigs.SERVER.substances.quicklimeBaseDecayTime))
