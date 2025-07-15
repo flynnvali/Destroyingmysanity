@@ -6,47 +6,44 @@ import com.petrolpark.destroy.chemistry.legacy.index.genericreaction.*;
 
 public class DestroyGenericReactions {
 
-    public static final AcetylideHydrolysis ACETYLIDE_HYDRATION = new AcetylideHydrolysis();
-    public static final AcetylideNucleophilicAddition ACETYLIDE_ADDITION = new AcetylideNucleophilicAddition();
     public static final AcylChlorideEsterification ACYL_CHLORIDE_ESTERIFICATION = new AcylChlorideEsterification();
     public static final AcylChlorideFormation ACYL_CHLORIDE_FORMATION = new AcylChlorideFormation();
     public static final AcylChlorideHydrolysis ACYL_CHLORIDE_HYDROLYSIS = new AcylChlorideHydrolysis();
     public static final AlcoholDehydration ALCOHOL_DEHYDRATION = new AlcoholDehydration();
     public static final AlcoholOxidation ALCOHOL_OXIDATION = new AlcoholOxidation();
     public static final AldehydeOxidation ALDEHYDE_OXIDATION = new AldehydeOxidation();
-    public static final HydrideAlkyneDeprotonation HYDRIDE_ALKYNE_DEPROTONATION = new HydrideAlkyneDeprotonation();
-    public static final AlkyneHydrolysis ALKYNE_HYDROLYSIS = new AlkyneHydrolysis();
-    public static final AlkynePartialHydrogenation ALKYNE_DISSOLVING_METAL_REDUCTION = new AlkynePartialHydrogenation();
     public static final ElectrophilicChlorination ALKENE_CHLORINATION = new ElectrophilicChlorination(false);
     public static final ElectrophilicChlorohydrination ALKENE_CHLOROHYDRINATION = new ElectrophilicChlorohydrination(false);
     public static final SaturatedCarbonHydrolysis ALKENE_HYDROLYSIS = new SaturatedCarbonHydrolysis(false);
-    //public static final ElectrophilicHydroboration ALKENE_HYDROBORATION = new ElectrophilicHydroboration(false); // causes a game freeze whenever it occurs, my guess is excessive esterification, alkyne is the same
-    public static final BoraneElectrophilicHydroboration ALKENE_HYDROBORATION_WITH_BORANE = new BoraneElectrophilicHydroboration(false);
+    //public static final ElectrophilicHydroboration ALKENE_HYDROBORATION = new ElectrophilicHydroboration(false); // causes a game freeze whenever it occurs, my guess is excessive esterification, alkyne is the same, added simplified Hydroboration Oxidation reaction to compensate
+    public static final AlkeneHydroborationOxidation ALKENE_HYDROBORATION_OXIDATION = new AlkeneHydroborationOxidation();
+    //public static final BoraneElectrophilicHydroboration ALKENE_HYDROBORATION_WITH_BORANE = new BoraneElectrophilicHydroboration(false);
     public static final ElectrophilicHydrochlorination ALKENE_HYDROCHLORINATION = new ElectrophilicHydrochlorination(false);
     public static final SaturatedCarbonHydrogenation ALKENE_HYDROGENATION = new SaturatedCarbonHydrogenation(false);
     public static final ElectrophilicHydroiodination ALKENE_HYDROIODINATION = new ElectrophilicHydroiodination(false);
     public static final ElectrophilicIodination ALKENE_IODINATION = new ElectrophilicIodination(false);
     public static final AlkoxideProtonation ALKOXIDE_PROTONATION = new AlkoxideProtonation();
     public static final ElectrophilicChlorination ALKYNE_CHLORINATION = new ElectrophilicChlorination(true);
-    public static final AlkyneChlorohydrination ALKYNE_CHLOROHYDRINATION = new AlkyneChlorohydrination();
-   //public static final ElectrophilicHydroboration ALKYNE_HYDROBORATION = new ElectrophilicHydroboration(true);
-    public static final BoraneElectrophilicHydroboration ALKYNE_HYDROBORATION_WITH_BORANE = new BoraneElectrophilicHydroboration(true);
+    public static final ElectrophilicChlorohydrination ALKYNE_CHLOROHYDRINATION = new ElectrophilicChlorohydrination(true);
+    public static final SaturatedCarbonHydrolysis ALKYNE_HYDROLYSIS = new SaturatedCarbonHydrolysis(true);
+    //public static final ElectrophilicHydroboration ALKYNE_HYDROBORATION = new ElectrophilicHydroboration(true); // see alkene hydroboration
+    public static final AlkyneHydroborationOxidation ALKYNE_HYDROBORATION_OXIDATION = new AlkyneHydroborationOxidation();
+    //public static final BoraneElectrophilicHydroboration ALKYNE_HYDROBORATION_WITH_BORANE = new BoraneElectrophilicHydroboration(true); // unneeded thanks to simplified Hydroboration Oxidation reaction
     public static final ElectrophilicHydrochlorination ALKYNE_HYDROCHLORINATION = new ElectrophilicHydrochlorination(true);
     public static final SaturatedCarbonHydrogenation ALKYNE_HYDROGENATION = new SaturatedCarbonHydrogenation(true);
     public static final ElectrophilicHydroiodination ALKYNE_HYDROIODINATION = new ElectrophilicHydroiodination(true);
     public static final ElectrophilicIodination ALKYNE_IODINATION = new ElectrophilicIodination(true);
     public static final AmideHydrolysis AMIDE_HYDROLYSIS = new AmideHydrolysis();
     public static final AminePhosgenation AMINE_PHOSGENATION = new AminePhosgenation();
-    public static final BoraneOxidation BORANE_OXIDATION = new BoraneOxidation();
-    public static final BorateEsterHydrolysis BORATE_ESTER_HYDROLYSIS = new BorateEsterHydrolysis();
-    //public static final BorateEsterification BORATE_ESTERIFICATION = new BorateEsterification(); // any solution containing boron compounds, even just boric acid or trace borate ions, becomes a disgusting mess of constantly esterifying generics
-    //public static final BorohydrideCarbonylReduction BOROHYDRIDE_CARBONYL_REDUCTION = new BorohydrideCarbonylReduction();
-    //public static final CarboxylicAcidReduction CARBOXYLIC_ACID_REDUCTION = new CarboxylicAcidReduction();
+    //public static final BoraneOxidation BORANE_OXIDATION = new BoraneOxidation(); // unneeded thanks to simplified Hydroboration Oxidation reaction
+    //public static final BorateEsterHydrolysis BORATE_ESTER_HYDROLYSIS = new BorateEsterHydrolysis(); // unneeded thanks to reverse reaction
+    //public static final BorateEsterification BORATE_ESTERIFICATION = new BorateEsterification(); // any solution containing boron compounds, even just boric acid or trace borate ions, becomes a disgusting mess of constantly esterifying generics, replaced w/ non-generic trimethyl borate synthesis reaction
+    public static final BorohydrideCarbonylReduction BOROHYDRIDE_CARBONYL_REDUCTION = new BorohydrideCarbonylReduction();
+    public static final CarboxylicAcidReduction CARBOXYLIC_ACID_REDUCTION = new CarboxylicAcidReduction();
     public static final CyanamideAddition CYANAMIDE_ADDITION = new CyanamideAddition();
     public static final CarboxylicAcidEsterification CARBOXYLIC_ACID_ESTERIFICATION = new CarboxylicAcidEsterification();
     public static final CyanideNucleophilicAddition CYANIDE_NUCLEOPHILIC_ADDITION = new CyanideNucleophilicAddition();
     public static final HalideAmineSubstitution HALIDE_AMINE_SUBSTITUION = new HalideAmineSubstitution();
-    public static final HalideAcetylideSubstitution HALIDE_ACETYLIDE_SUBSTITUTION = new HalideAcetylideSubstitution();
     public static final HalideAmmoniaSubstitution HALIDE_AMMONIA_SUBSTITUTION = new HalideAmmoniaSubstitution();
     public static final HalideCyanideSubstitution HALIDE_CYANIDE_SUBSTITUTION = new HalideCyanideSubstitution();
     public static final HalideHydroxideSubstitution HALIDE_HYDROXIDE_SUBSTITUTION = new HalideHydroxideSubstitution();
@@ -56,8 +53,6 @@ public class DestroyGenericReactions {
     public static final NitroHydrogenation NITRO_HYDROGENATION = new NitroHydrogenation();
     public static final ThionylChlorideSubstitution THIONYL_CHLORIDE_SUBSTITUTION = new ThionylChlorideSubstitution();
     public static final WolffKishnerReduction WOLFF_KISHNER_REDUCTION = new WolffKishnerReduction();
-    public static final GeminalDihalideHydroxideSubstitution GEMINAL_DIHALIDE_HYDROXIDE_SUBSTITUTION = new GeminalDihalideHydroxideSubstitution();
-    public static final LeukartReaction LEUKART_REACTION = new LeukartReaction();
 
     public static void register() {};
 };
