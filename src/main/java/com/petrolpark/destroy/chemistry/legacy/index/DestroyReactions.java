@@ -347,9 +347,9 @@ public class DestroyReactions {
         .addReactant(DestroyMolecules.BENZENE)
         .addReactant(DestroyMolecules.PROPENE)
         .addReactant(DestroyMolecules.OXYGEN)
-        .addCatalyst(DestroyMolecules.AIBN, 0)
-        .addCatalyst(DestroyMolecules.PROTON, 1)
-        //TODO add Lewis acid catalyst
+        .addSimpleItemCatalyst(DestroyItems.ACETONE_PEROXIDE, 3f)
+        .addCatalyst(DestroyMolecules.IRON_III, 1)
+        .addCatalyst(DestroyMolecules.CHLORIDE, 1)
         .addProduct(DestroyMolecules.PHENOL)
         .addProduct(DestroyMolecules.ACETONE)
         .build(),
