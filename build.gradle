@@ -194,7 +194,7 @@ dependencies {
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
     // Petrolpark Library (temporary)
-    implementation "com.petrolpark:petrolpark:${minecraft_version}-${petrolpark_library_version}"
+    compileOnly fg.deobf("maven.modrinth:petrolpark:1.20.1-1.4.9")
 
     // JGraphT
     //jarJar(implementation("org.jgrapht:jgrapht-core:[${jgrapht_version}]"))
