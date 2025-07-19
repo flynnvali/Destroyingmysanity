@@ -203,10 +203,21 @@ public class DestroyReactions {
         .id("carbon_capture")
         .addReactant(DestroyMolecules.CALCIUM_ION)
         .addReactant(DestroyMolecules.CARBON_DIOXIDE)
-        .addReactant(DestroyMolecules.WATER)
-        .addProduct(DestroyMolecules.PROTON, 2)
+        .addReactant(DestroyMolecules.HYDROXIDE,2 )
+        .addProduct(DestroyMolecules.WATER)
         .withResult(2f, PrecipitateReactionResult.of(DestroyItems.CHALK_DUST::asStack))
         .build(),
+
+    CARBON_DIOXIDE_HYDROGENATION = builder()
+            .id("carbon_dioxide_hydrogenation")
+            .addReactant(DestroyMolecules.CARBON_DIOXIDE)
+            .addReactant(DestroyMolecules.HYDROGEN)
+            .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
+            .addProduct(DestroyMolecules.FORMIC_ACID)
+            .reverseReaction(reaction -> reaction
+                    .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
+            )
+            .build(),
 
     CARBON_MONOXIDE_OXIDATION = builder()
         .id("carbon_monoxide_oxidation")
@@ -231,6 +242,15 @@ public class DestroyReactions {
         .addProduct(DestroyMolecules.PROTON)
         .addProduct(DestroyMolecules.WATER) //TODO in future add oxalic acid side product
         .withResult(2f, PrecipitateReactionResult.of(DestroyItems.NITROCELLULOSE::asStack))
+        .build(),
+
+    CHALK_DISSOLUTION = builder()
+        .id("chalk_dissolution")
+        .addSimpleItemReactant(DestroyItems.CHALK_DUST, 2f)
+        .addReactant(DestroyMolecules.PROTON)
+        .addProduct(DestroyMolecules.CARBON_DIOXIDE)
+        .addProduct(DestroyMolecules.CALCIUM_ION)
+        .addCatalyst(DestroyMolecules.WATER, 2)
         .build(),
 
     CHLORINE_HALOFORM_REACTION = builder()
@@ -382,16 +402,6 @@ public class DestroyReactions {
         .reversible()
         .build(),
 
-    CARBON_DIOXIDE_HYDROGENATION = builder()
-        .id("carbon_dioxide_hydrogenation")
-        .addReactant(DestroyMolecules.CARBON_DIOXIDE)
-        .addReactant(DestroyMolecules.HYDROGEN)
-        .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
-        .addProduct(DestroyMolecules.FORMIC_ACID)
-            .reverseReaction(reaction -> reaction
-                    .addSimpleItemTagCatalyst(AllTags.forgeItemTag("dusts/rhodium"), 1f)
-            )
-        .build(),
 
     COPPER_DISSOLUTION = builder() //TODO replace with redox
         .id("copper_dissolution")

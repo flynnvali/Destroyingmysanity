@@ -1127,6 +1127,8 @@
     "destroy.reaction.carbon_tetrachloride_fluorination.description": "The {substitution, destroy:substitution} of chlorine for fluorine in [destroy:carbon_tetrachloride] to produce various fluorinated products.",
     "destroy.reaction.cellulose_nitration": "Cellulose Nitration",
     "destroy.reaction.cellulose_nitration.description": "A method for the production of Nitrocellulose by reacting cellulose with [destroy:nitric_acid] and [destroy:sulfuric_acid].",
+    "destroy.reaction.chalk_dissolution": "Chalk Dissolution",
+    "destroy.reaction.chalk_dissolution.description": "The dissolution of Chalk Dust (Calcium Carbonate) in an {acidic, destroy:acid} environment.",
     "destroy.reaction.chlorine_haloform_reaction": "Haloform Reaction",
     "destroy.reaction.chlorine_haloform_reaction.description": "Repeated chlorination of the slightly {acidic, destroy:acid} {ketone, destroy:ketone} group, followed by a {nucleophilic, destroy:nucleophile} {substitution, destroy:substitution} to form a carboxylate.",
     "destroy.reaction.chlorine_solvation": "[destroy:chlorine] Solvation",

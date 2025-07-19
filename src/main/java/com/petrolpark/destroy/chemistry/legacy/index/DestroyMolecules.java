@@ -1268,6 +1268,7 @@ public final class DestroyMolecules {
         .density(2628.8f)
         .molarHeatCapacity(39.87f)
         .tag(Tags.ACUTELY_TOXIC)
+        .tag(Tags.REFRIGERANT)
         .tag(Tags.ACID_RAIN)
         .build(),
 
